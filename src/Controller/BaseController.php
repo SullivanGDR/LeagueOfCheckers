@@ -14,4 +14,10 @@ class BaseController extends AbstractController
         return $this->render('base/index.html.twig', [
         ]);
     }
+    #[Route('/damier', name: 'damier')]
+    public function damier(): Response
+    {
+        return $this->render('base/damier.html.twig', [
+        ]);
+    }
 }
