@@ -78,3 +78,7 @@
     transform: scale(1.2);
     border-color:#ff2b4b;
 }
+
+a {
+    color:#d1d5db !important;
+}
