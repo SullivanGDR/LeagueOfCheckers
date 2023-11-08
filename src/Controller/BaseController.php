@@ -22,7 +22,7 @@ class BaseController extends AbstractController
     }
     #[Route('/rangs', name: 'rangs')]
     public function rangs(): Response
-    {
+    {    
         return $this->render('base/rangs.html.twig', [
         ]);
     }
