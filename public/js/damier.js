@@ -1,7 +1,7 @@
 createDamier();
 console.log(document.getElementById('damier'))
 var pionS=null;
-
+var caseMove=null;
 function createDamier() {
     var damier = document.getElementById('damier');
     for (var i = 0; i <= 9; i++) {
@@ -87,8 +87,24 @@ function select() {
 function moove() {
     if (pionS !== null) {
         caseChoisis = this
-        console.log(caseChoisis)
+        //console.log(caseChoisis)
         if (caseChoisis.style.backgroundColor == "blue") {
+            pionS.parentElement.removeChild(pionS);
+            caseChoisis.appendChild(pionS);
+            resetCase();
+            resetSelectPion();
+        }
+    }
+}
+
+function moove2() {
+    if (pionS !== null) {
+        caseChoisis = caseMove
+        //console.log(caseChoisis)
+        console.log("manger1")
+        if (caseChoisis.style.backgroundColor == "blue") {
+            console.log("manger")
+            console.log(pionS)
             pionS.parentElement.removeChild(pionS);
             caseChoisis.appendChild(pionS);
             resetCase();
@@ -129,15 +145,21 @@ function selectCase() {
 
             if (targetCase && !targetCase.firstChild) {
                 targetCase.style.backgroundColor = "blue";
+                console.log("coucou")
+                console.log(targetCase);
                 targetCase.addEventListener("click", moove);
-            } else if (targetCase && targetCase.firstChild) {
+            } else if (targetCase && targetCase.firstChild && (pionS.classList.contains("pion-blanc") && !targetCase.firstChild.classList.contains("pion-blanc")) ||
+            (pionS.classList.contains("pion-noir") && !targetCase.firstChild.classList.contains("pion-noir")) ) {
                 const jumpTarget = document.querySelector(`[data-x="${targetX + dx}"][data-y="${targetY + dy}"]`);
                 if (jumpTarget && !jumpTarget.firstChild) {
                     jumpTarget.style.backgroundColor = "blue";
                     jumpTarget.addEventListener("click", function () {
-                        moove();
+                        caseMove=this;
+                        moove2();
+                        
                         let caseClear = document.querySelector(`[data-x="${targetX}"][data-y="${targetY}"]`);
                         if (caseClear) {
+                            console.log("coucou2")
                             console.log(caseClear);
                             let pion = caseClear.firstChild;
                             if (pion) {
@@ -148,24 +170,29 @@ function selectCase() {
                 }
             }
         }
-
+        console.log("=========");
         if (pionS.classList.contains("pion-noir")) {
-            if (x === 0 || x === 9) {
+            if (x === 0) {
                 // Handle corner cases
                 processCase(1, 1);
+            }else if (x === 9) {
+                processCase(-1, 1);
             } else {
                 processCase(1, 1);
                 processCase(-1, 1);
             }
         } else if (pionS.classList.contains("pion-blanc")) {
-            if (x === 0 || x === 9) {
+            if (x === 0) {
                 // Handle corner cases
                 processCase(1, -1);
+            }else if (x === 9) {
+                processCase(-1, -1);
             } else {
                 processCase(1, -1);
                 processCase(-1, -1);
             }
         }
+        console.log("=========");
     }
 }
 
