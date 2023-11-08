@@ -1,0 +1,22 @@
+.inputJoinParty {
+    background-color: transparent;
+    outline: none;
+    border: 0;
+}
+
+.btnJoinParty {
+    background-color: transparent;
+    padding: 5px;
+    border: solid 2px #4BB543;
+    border-radius: 8px;
+    color: #4BB543;
+    font-weight: bold;
+}
+
+.btnJoinParty:hover {
+    background-color: #4BB543;
+    border: solid 2px #4BB543;
+    border-radius: 8px;
+    color: white;
+    font-weight: bold;
+}
