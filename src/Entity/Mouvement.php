@@ -6,7 +6,14 @@ use App\Repository\MouvementRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Get;
 
+#[ApiResource(operations:[
+    new Post(),
+    new Get()
+])]
 #[ORM\Entity(repositoryClass: MouvementRepository::class)]
 class Mouvement
 {

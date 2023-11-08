@@ -51,6 +51,9 @@ class Joueur implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'joueur', targetEntity: Mouvement::class)]
     private Collection $mouvements;
 
+    #[ORM\Column]
+    private ?int $monnaie = null;
+
     public function __construct()
     {
         $this->parties = new ArrayCollection();
@@ -243,6 +246,18 @@ class Joueur implements UserInterface, PasswordAuthenticatedUserInterface
                 $mouvement->setJoueur(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getMonnaie(): ?int
+    {
+        return $this->monnaie;
+    }
+
+    public function setMonnaie(int $monnaie): static
+    {
+        $this->monnaie = $monnaie;
 
         return $this;
     }

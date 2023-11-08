@@ -4,7 +4,12 @@ namespace App\Entity;
 
 use App\Repository\DeplacementRepository;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Post;
 
+#[ApiResource(operations:[
+    new Post()
+])]
 #[ORM\Entity(repositoryClass: DeplacementRepository::class)]
 class Deplacement
 {

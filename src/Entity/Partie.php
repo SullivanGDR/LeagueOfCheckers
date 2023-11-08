@@ -5,7 +5,12 @@ namespace App\Entity;
 use App\Repository\PartieRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Patch;
 
+#[ApiResource(operations:[
+    new Patch()
+])]
 #[ORM\Entity(repositoryClass: PartieRepository::class)]
 class Partie
 {
