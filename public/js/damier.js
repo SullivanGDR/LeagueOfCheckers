@@ -97,14 +97,6 @@ function moove() {
     }
 }
 
-function mange(x,y) {
-    moove();
-    let caseClear=document.querySelector(`[data-x="${x}"][data-y="${y}"]`);
-    console.log(caseClear)
-    let pion=caseClear.firstChild;
-    caseClear.removeChild(pion)
-}
-
 function resetCase() {
     let casePlateauBlack = document.getElementsByClassName("case-noire");
     let casePlateauBlanc = document.getElementsByClassName("case-blanche");
@@ -125,94 +117,60 @@ function selectCase() {
     if (pionS !== null) {
         resetCase();
 
-        let caseChoisis = pionS.parentElement;
-        let x = parseInt(caseChoisis.dataset.x);
-        let y = parseInt(caseChoisis.dataset.y);
-        let caseD = null;
-        let caseG = null;
+        const caseChoisis = pionS.parentElement;
+        const x = parseInt(caseChoisis.dataset.x);
+        const y = parseInt(caseChoisis.dataset.y);
 
-        if (pionS.classList.contains("pion-noir")) {
-            if (x == 0) {
-                caseD = document.querySelector(`[data-x="${x + 1}"][data-y="${y + 1}"]`);
-                if (!caseD.firstChild) {
-                    caseD.style.backgroundColor = "blue";
-                    caseD.addEventListener("click", moove);
-                } else if (caseD.firstChild && caseD.firstChild.classList.contains("pion-blanc") && !document.querySelector(`[data-x="${x + 2}"][data-y="${y + 2}"]`).firstChild) {
-                    caseD = document.querySelector(`[data-x="${x + 2}"][data-y="${y + 2}"]`).style.backgroundColor = "blue";
-                    caseD.addEventListener("click", mange(x+1,y+1));
-                }
+        function processCase(dx, dy) {
+            const targetX = x + dx;
+            const targetY = y + dy;
 
-            } else if (x == 9) {
-                caseG = document.querySelector(`[data-x="${x - 1}"][data-y="${y + 1}"]`);
-                if (!caseG.firstChild) {
-                    caseG.style.backgroundColor = "blue";
-                    caseG.addEventListener("click", moove);
-                } else if (caseG.firstChild && caseG.firstChild.classList.contains("pion-blanc") && !document.querySelector(`[data-x="${x - 2}"][data-y="${y + 2}"]`).firstChild) {
-                    caseG = document.querySelector(`[data-x="${x - 2}"][data-y="${y + 2}"]`).style.backgroundColor = "blue";
-                    caseG.addEventListener("click", mange(x-1,y+1));
-                }
-            } else {
-                caseD = document.querySelector(`[data-x="${x + 1}"][data-y="${y + 1}"]`);
-                caseG = document.querySelector(`[data-x="${x - 1}"][data-y="${y + 1}"]`);
-                if (!caseD.firstChild) {
-                    caseD.style.backgroundColor = "blue";
-                    caseD.addEventListener("click", moove);
-                } else if (caseD.firstChild && caseD.firstChild.classList.contains("pion-blanc")) {
-                    caseD = document.querySelector(`[data-x="${x + 2}"][data-y="${y + 2}"]`).style.backgroundColor = "blue";
-                    caseD.addEventListener("click", mange(x+1,y+1));
-                }
+            const targetCase = document.querySelector(`[data-x="${targetX}"][data-y="${targetY}"]`);
 
-                if (!caseG.firstChild) {
-                    caseG.style.backgroundColor = "blue";
-                    caseG.addEventListener("click", moove);
-                } else if (caseG.firstChild && caseG.firstChild.classList.contains("pion-blanc")) {
-                    caseG = document.querySelector(`[data-x="${x - 2}"][data-y="${y + 2}"]`).style.backgroundColor = "blue";
-                    caseG.addEventListener("click", mange(x-1,y+1));
+            if (targetCase && !targetCase.firstChild) {
+                targetCase.style.backgroundColor = "blue";
+                targetCase.addEventListener("click", moove);
+            } else if (targetCase && targetCase.firstChild) {
+                const jumpTarget = document.querySelector(`[data-x="${targetX + dx}"][data-y="${targetY + dy}"]`);
+                if (jumpTarget && !jumpTarget.firstChild) {
+                    jumpTarget.style.backgroundColor = "blue";
+                    jumpTarget.addEventListener("click", function () {
+                        moove();
+                        let caseClear = document.querySelector(`[data-x="${targetX}"][data-y="${targetY}"]`);
+                        if (caseClear) {
+                            console.log(caseClear);
+                            let pion = caseClear.firstChild;
+                            if (pion) {
+                                caseClear.removeChild(pion);
+                            }
+                        }
+                    });
                 }
             }
+        }
 
-        } else {
-            if (x == 0) {
-                caseD = document.querySelector(`[data-x="${x + 1}"][data-y="${y - 1}"]`);
-                if (!caseD.firstChild) {
-                    caseD.style.backgroundColor = "blue";
-                    caseD.addEventListener("click", moove);
-                } else if (caseD.firstChild && caseD.firstChild.classList.contains("pion-noir")) {
-                    caseD = document.querySelector(`[data-x="${x + 2}"][data-y="${y - 2}"]`).style.backgroundColor = "blue";
-                    caseD.addEventListener("click", mange(x+1,y-1));
-                }
-
-            } else if (x == 9) {
-                caseG = document.querySelector(`[data-x="${x - 1}"][data-y="${y - 1}"]`);
-                if (!caseG.firstChild) {
-                    caseG.style.backgroundColor = "blue";
-                    caseG.addEventListener("click", moove);
-                } else if (caseG.firstChild && caseG.firstChild.classList.contains("pion-noir")) {
-                    caseG = document.querySelector(`[data-x="${x - 2}"][data-y="${y - 2}"]`).style.backgroundColor = "blue";
-                    caseG.addEventListener("click", mange(x-1,y-1));
-                }
+        if (pionS.classList.contains("pion-noir")) {
+            if (x === 0 || x === 9) {
+                // Handle corner cases
+                processCase(1, 1);
             } else {
-                caseD = document.querySelector(`[data-x="${x + 1}"][data-y="${y - 1}"]`);
-                caseG = document.querySelector(`[data-x="${x - 1}"][data-y="${y - 1}"]`);
-                if (!caseD.firstChild) {
-                    caseD.style.backgroundColor = "blue";
-                    caseD.addEventListener("click", moove);
-                } else if (caseD.firstChild && caseD.firstChild.classList.contains("pion-noir")) {
-                    caseD = document.querySelector(`[data-x="${x + 2}"][data-y="${y - 2}"]`).style.backgroundColor = "blue";
-                    caseD.addEventListener("click", mange(x+1,y-1));
-                }
-
-                if (!caseG.firstChild) {
-                    caseG.style.backgroundColor = "blue";
-                    caseG.addEventListener("click", moove);
-                } else if (caseG.firstChild && caseG.firstChild.classList.contains("pion-noir")) {
-                    caseG = document.querySelector(`[data-x="${x - 2}"][data-y="${y - 2}"]`).style.backgroundColor = "blue";
-                    caseG.addEventListener("click", mange(x-1,y-1));
-                }
+                processCase(1, 1);
+                processCase(-1, 1);
+            }
+        } else if (pionS.classList.contains("pion-blanc")) {
+            if (x === 0 || x === 9) {
+                // Handle corner cases
+                processCase(1, -1);
+            } else {
+                processCase(1, -1);
+                processCase(-1, -1);
             }
         }
     }
 }
+
+
+
 
 
 
@@ -231,3 +189,14 @@ function mme() {
 
 document.getElementById("switch").addEventListener("click",mme,false);
 
+// function mange(x, y) {
+//     moove();
+//     let caseClear = document.querySelector(`[data-x="${x}"][data-y="${y}"]`);
+//     if (caseClear) {
+//         console.log(caseClear);
+//         let pion = caseClear.firstChild;
+//         if (pion) {
+//             caseClear.removeChild(pion);
+//         }
+//     }
+// }
