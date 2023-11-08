@@ -1,0 +1,29 @@
+.container-rang {
+    background-color:#374151;
+    border-radius: 16px;
+    text-align: center;
+    margin-right: 5px;
+    margin-left: 5px;
+    flex: 0 0 calc(33.33% - 10px) !important;
+}
+
+p {
+    padding: 0;
+    margin: 10px;
+    color:#d1d5db;
+}
+
+ul li {
+    color:#d1d5db;
+}
+  
+.scroll-container {
+    white-space: nowrap; 
+    overflow-x: hidden; 
+    display: flex; 
+    scroll-behavior: smooth;
+}
+
+hr{
+    color: white;
+}
