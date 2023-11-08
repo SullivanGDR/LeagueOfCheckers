@@ -3,8 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\PartieRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -16,72 +14,140 @@ class Partie
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column]
-    private ?int $nbCoupJ1 = null;
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $datePartie = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?array $etatPlateau = null;
 
     #[ORM\Column]
-    private ?int $nbCoupJ2 = null;
+    private ?int $nbCoupJN = null;
+
+    #[ORM\Column]
+    private ?int $nbCoupJB = null;
+
+    #[ORM\Column(type: Types::TIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $timer = null;
+
+    #[ORM\Column]
+    private ?int $nbTour = null;
+
+    #[ORM\Column]
+    private ?int $nbPionN = null;
+
+    #[ORM\Column]
+    private ?int $nbPionB = null;
 
     #[ORM\Column(length: 255)]
     private ?string $codePartie = null;
 
-    #[ORM\Column]
-    private ?bool $etatPartie = null;
-
-    #[ORM\Column(type: Types::TEXT)]
-    private ?string $etatPlateau = null;
-
-    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'gagner')]
-    private Collection $users;
+    #[ORM\ManyToOne(inversedBy: 'parties')]
+    private ?Joueur $joueurB = null;
 
     #[ORM\ManyToOne(inversedBy: 'parties')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?User $joueur1 = null;
+    private ?Joueur $joueurN = null;
 
     #[ORM\ManyToOne(inversedBy: 'parties')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?User $joueur2 = null;
-
-    #[ORM\ManyToMany(targetEntity: Deplacement::class, inversedBy: 'parties')]
-    private Collection $realiser;
-
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $datePartie = null;
-
-    #[ORM\ManyToOne(inversedBy: 'gagantPartie')]
-    private ?User $gagnant = null;
-
-    public function __construct()
-    {
-        $this->users = new ArrayCollection();
-        $this->realiser = new ArrayCollection();
-    }
+    private ?Joueur $winner = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getNbCoupJ1(): ?int
+    public function getDatePartie(): ?\DateTimeInterface
     {
-        return $this->nbCoupJ1;
+        return $this->datePartie;
     }
 
-    public function setNbCoupJ1(int $nbCoupJ1): static
+    public function setDatePartie(\DateTimeInterface $datePartie): static
     {
-        $this->nbCoupJ1 = $nbCoupJ1;
+        $this->datePartie = $datePartie;
 
         return $this;
     }
 
-    public function getNbCoupJ2(): ?int
+    public function getEtatPlateau(): ?array
     {
-        return $this->nbCoupJ2;
+        return $this->etatPlateau;
     }
 
-    public function setNbCoupJ2(int $nbCoupJ2): static
+    public function setEtatPlateau(?array $etatPlateau): static
     {
-        $this->nbCoupJ2 = $nbCoupJ2;
+        $this->etatPlateau = $etatPlateau;
+
+        return $this;
+    }
+
+    public function getNbCoupJN(): ?int
+    {
+        return $this->nbCoupJN;
+    }
+
+    public function setNbCoupJN(int $nbCoupJN): static
+    {
+        $this->nbCoupJN = $nbCoupJN;
+
+        return $this;
+    }
+
+    public function getNbCoupJB(): ?int
+    {
+        return $this->nbCoupJB;
+    }
+
+    public function setNbCoupJB(int $nbCoupJB): static
+    {
+        $this->nbCoupJB = $nbCoupJB;
+
+        return $this;
+    }
+
+    public function getTimer(): ?\DateTimeInterface
+    {
+        return $this->timer;
+    }
+
+    public function setTimer(?\DateTimeInterface $timer): static
+    {
+        $this->timer = $timer;
+
+        return $this;
+    }
+
+    public function getNbTour(): ?int
+    {
+        return $this->nbTour;
+    }
+
+    public function setNbTour(int $nbTour): static
+    {
+        $this->nbTour = $nbTour;
+
+        return $this;
+    }
+
+    public function getNbPionN(): ?int
+    {
+        return $this->nbPionN;
+    }
+
+    public function setNbPionN(int $nbPionN): static
+    {
+        $this->nbPionN = $nbPionN;
+
+        return $this;
+    }
+
+    public function getNbPionB(): ?int
+    {
+        return $this->nbPionB;
+    }
+
+    public function setNbPionB(int $nbPionB): static
+    {
+        $this->nbPionB = $nbPionB;
 
         return $this;
     }
@@ -98,125 +164,38 @@ class Partie
         return $this;
     }
 
-    public function isEtatPartie(): ?bool
+    public function getJoueurB(): ?Joueur
     {
-        return $this->etatPartie;
+        return $this->joueurB;
     }
 
-    public function setEtatPartie(bool $etatPartie): static
+    public function setJoueurB(?Joueur $joueurB): static
     {
-        $this->etatPartie = $etatPartie;
+        $this->joueurB = $joueurB;
 
         return $this;
     }
 
-    public function getEtatPlateau(): ?string
+    public function getJoueurN(): ?Joueur
     {
-        return $this->etatPlateau;
+        return $this->joueurN;
     }
 
-    public function setEtatPlateau(string $etatPlateau): static
+    public function setJoueurN(?Joueur $joueurN): static
     {
-        $this->etatPlateau = $etatPlateau;
+        $this->joueurN = $joueurN;
 
         return $this;
     }
 
-    /**
-     * @return Collection<int, User>
-     */
-    public function getUsers(): Collection
+    public function getWinner(): ?Joueur
     {
-        return $this->users;
+        return $this->winner;
     }
 
-    public function addUser(User $user): static
+    public function setWinner(?Joueur $winner): static
     {
-        if (!$this->users->contains($user)) {
-            $this->users->add($user);
-            $user->addGagner($this);
-        }
-
-        return $this;
-    }
-
-    public function removeUser(User $user): static
-    {
-        if ($this->users->removeElement($user)) {
-            $user->removeGagner($this);
-        }
-
-        return $this;
-    }
-
-    public function getJoueur1(): ?User
-    {
-        return $this->joueur1;
-    }
-
-    public function setJoueur1(?User $joueur1): static
-    {
-        $this->joueur1 = $joueur1;
-
-        return $this;
-    }
-
-    public function getJoueur2(): ?User
-    {
-        return $this->joueur2;
-    }
-
-    public function setJoueur2(?User $joueur2): static
-    {
-        $this->joueur2 = $joueur2;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Deplacement>
-     */
-    public function getRealiser(): Collection
-    {
-        return $this->realiser;
-    }
-
-    public function addRealiser(Deplacement $realiser): static
-    {
-        if (!$this->realiser->contains($realiser)) {
-            $this->realiser->add($realiser);
-        }
-
-        return $this;
-    }
-
-    public function removeRealiser(Deplacement $realiser): static
-    {
-        $this->realiser->removeElement($realiser);
-
-        return $this;
-    }
-
-    public function getDatePartie(): ?\DateTimeInterface
-    {
-        return $this->datePartie;
-    }
-
-    public function setDatePartie(\DateTimeInterface $datePartie): static
-    {
-        $this->datePartie = $datePartie;
-
-        return $this;
-    }
-
-    public function getGagnant(): ?User
-    {
-        return $this->gagnant;
-    }
-
-    public function setGagnant(?User $gagnant): static
-    {
-        $this->gagnant = $gagnant;
+        $this->winner = $winner;
 
         return $this;
     }

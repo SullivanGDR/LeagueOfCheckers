@@ -15,27 +15,27 @@ class Mouvement
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $emplacementX = null;
+    #[ORM\Column]
+    private ?int $emplacementX = null;
+
+    #[ORM\Column]
+    private ?int $emplacementY = null;
+
+    #[ORM\Column]
+    private ?int $arriveX = null;
+
+    #[ORM\Column]
+    private ?int $arriveY = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $emplacementY = null;
+    private ?string $typeMouv = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $arriveeX = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $arriveeY = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $typeMouvement = null;
-
-    #[ORM\OneToMany(mappedBy: 'posseder', targetEntity: Deplacement::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'mouvement', targetEntity: Deplacement::class, orphanRemoval: true)]
     private Collection $deplacements;
 
     #[ORM\ManyToOne(inversedBy: 'mouvements')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?User $executer = null;
+    private ?Joueur $joueur = null;
 
     public function __construct()
     {
@@ -47,62 +47,62 @@ class Mouvement
         return $this->id;
     }
 
-    public function getEmplacementX(): ?string
+    public function getEmplacementX(): ?int
     {
         return $this->emplacementX;
     }
 
-    public function setEmplacementX(string $emplacementX): static
+    public function setEmplacementX(int $emplacementX): static
     {
         $this->emplacementX = $emplacementX;
 
         return $this;
     }
 
-    public function getEmplacementY(): ?string
+    public function getEmplacementY(): ?int
     {
         return $this->emplacementY;
     }
 
-    public function setEmplacementY(string $emplacementY): static
+    public function setEmplacementY(int $emplacementY): static
     {
         $this->emplacementY = $emplacementY;
 
         return $this;
     }
 
-    public function getArriveeX(): ?string
+    public function getArriveX(): ?int
     {
-        return $this->arriveeX;
+        return $this->arriveX;
     }
 
-    public function setArriveeX(string $arriveeX): static
+    public function setArriveX(int $arriveX): static
     {
-        $this->arriveeX = $arriveeX;
+        $this->arriveX = $arriveX;
 
         return $this;
     }
 
-    public function getArriveeY(): ?string
+    public function getArriveY(): ?int
     {
-        return $this->arriveeY;
+        return $this->arriveY;
     }
 
-    public function setArriveeY(string $arriveeY): static
+    public function setArriveY(int $arriveY): static
     {
-        $this->arriveeY = $arriveeY;
+        $this->arriveY = $arriveY;
 
         return $this;
     }
 
-    public function getTypeMouvement(): ?string
+    public function getTypeMouv(): ?string
     {
-        return $this->typeMouvement;
+        return $this->typeMouv;
     }
 
-    public function setTypeMouvement(string $typeMouvement): static
+    public function setTypeMouv(string $typeMouv): static
     {
-        $this->typeMouvement = $typeMouvement;
+        $this->typeMouv = $typeMouv;
 
         return $this;
     }
@@ -119,7 +119,7 @@ class Mouvement
     {
         if (!$this->deplacements->contains($deplacement)) {
             $this->deplacements->add($deplacement);
-            $deplacement->setPosseder($this);
+            $deplacement->setMouvement($this);
         }
 
         return $this;
@@ -129,22 +129,22 @@ class Mouvement
     {
         if ($this->deplacements->removeElement($deplacement)) {
             // set the owning side to null (unless already changed)
-            if ($deplacement->getPosseder() === $this) {
-                $deplacement->setPosseder(null);
+            if ($deplacement->getMouvement() === $this) {
+                $deplacement->setMouvement(null);
             }
         }
 
         return $this;
     }
 
-    public function getExecuter(): ?User
+    public function getJoueur(): ?Joueur
     {
-        return $this->executer;
+        return $this->joueur;
     }
 
-    public function setExecuter(?User $executer): static
+    public function setJoueur(?Joueur $joueur): static
     {
-        $this->executer = $executer;
+        $this->joueur = $joueur;
 
         return $this;
     }

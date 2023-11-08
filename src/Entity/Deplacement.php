@@ -3,8 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\DeplacementRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: DeplacementRepository::class)]
@@ -15,118 +13,83 @@ class Deplacement
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $emplacementX = null;
+    #[ORM\Column]
+    private ?int $emplacementX = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $emplacementY = null;
+    #[ORM\Column]
+    private ?int $emplacementY = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $arriveeX = null;
+    #[ORM\Column]
+    private ?int $arriveX = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $arriveeY = null;
-
-    #[ORM\ManyToMany(targetEntity: Partie::class, mappedBy: 'realiser')]
-    private Collection $parties;
+    #[ORM\Column]
+    private ?int $arriveY = null;
 
     #[ORM\ManyToOne(inversedBy: 'deplacements')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Mouvement $posseder = null;
-
-    public function __construct()
-    {
-        $this->parties = new ArrayCollection();
-    }
+    private ?Mouvement $mouvement = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getEmplacementX(): ?string
+    public function getEmplacementX(): ?int
     {
         return $this->emplacementX;
     }
 
-    public function setEmplacementX(string $emplacementX): static
+    public function setEmplacementX(int $emplacementX): static
     {
         $this->emplacementX = $emplacementX;
 
         return $this;
     }
 
-    public function getEmplacementY(): ?string
+    public function getEmplacementY(): ?int
     {
         return $this->emplacementY;
     }
 
-    public function setEmplacementY(string $emplacementY): static
+    public function setEmplacementY(int $emplacementY): static
     {
         $this->emplacementY = $emplacementY;
 
         return $this;
     }
 
-    public function getArriveeX(): ?string
+    public function getArriveX(): ?int
     {
-        return $this->arriveeX;
+        return $this->arriveX;
     }
 
-    public function setArriveeX(string $arriveeX): static
+    public function setArriveX(int $arriveX): static
     {
-        $this->arriveeX = $arriveeX;
+        $this->arriveX = $arriveX;
 
         return $this;
     }
 
-    public function getArriveeY(): ?string
+    public function getArriveY(): ?int
     {
-        return $this->arriveeY;
+        return $this->arriveY;
     }
 
-    public function setArriveeY(string $arriveeY): static
+    public function setArriveY(int $arriveY): static
     {
-        $this->arriveeY = $arriveeY;
+        $this->arriveY = $arriveY;
 
         return $this;
     }
 
-    /**
-     * @return Collection<int, Partie>
-     */
-    public function getParties(): Collection
+    public function getMouvement(): ?Mouvement
     {
-        return $this->parties;
+        return $this->mouvement;
     }
 
-    public function addParty(Partie $party): static
+    public function setMouvement(?Mouvement $mouvement): static
     {
-        if (!$this->parties->contains($party)) {
-            $this->parties->add($party);
-            $party->addRealiser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeParty(Partie $party): static
-    {
-        if ($this->parties->removeElement($party)) {
-            $party->removeRealiser($this);
-        }
-
-        return $this;
-    }
-
-    public function getPosseder(): ?Mouvement
-    {
-        return $this->posseder;
-    }
-
-    public function setPosseder(?Mouvement $posseder): static
-    {
-        $this->posseder = $posseder;
+        $this->mouvement = $mouvement;
 
         return $this;
     }

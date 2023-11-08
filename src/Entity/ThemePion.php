@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\RangRepository;
+use App\Repository\ThemePionRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: RangRepository::class)]
-class Rang
+#[ORM\Entity(repositoryClass: ThemePionRepository::class)]
+class ThemePion
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -16,15 +16,15 @@ class Rang
     private ?int $id = null;
 
     #[ORM\Column(length: 50)]
-    private ?string $libelle = null;
+    private ?string $couleur = null;
 
-    #[ORM\Column]
-    private ?int $scoreMin = null;
+    #[ORM\Column(length: 50)]
+    private ?string $ARGB = null;
 
-    #[ORM\Column]
-    private ?int $scoreMax = null;
+    #[ORM\Column(length: 255)]
+    private ?string $image = null;
 
-    #[ORM\OneToMany(mappedBy: 'rang', targetEntity: Joueur::class)]
+    #[ORM\OneToMany(mappedBy: 'themePion', targetEntity: Joueur::class)]
     private Collection $joueurs;
 
     public function __construct()
@@ -37,38 +37,38 @@ class Rang
         return $this->id;
     }
 
-    public function getLibelle(): ?string
+    public function getCouleur(): ?string
     {
-        return $this->libelle;
+        return $this->couleur;
     }
 
-    public function setLibelle(string $libelle): static
+    public function setCouleur(string $couleur): static
     {
-        $this->libelle = $libelle;
+        $this->couleur = $couleur;
 
         return $this;
     }
 
-    public function getScoreMin(): ?int
+    public function getARGB(): ?string
     {
-        return $this->scoreMin;
+        return $this->ARGB;
     }
 
-    public function setScoreMin(int $scoreMin): static
+    public function setARGB(string $ARGB): static
     {
-        $this->scoreMin = $scoreMin;
+        $this->ARGB = $ARGB;
 
         return $this;
     }
 
-    public function getScoreMax(): ?int
+    public function getImage(): ?string
     {
-        return $this->scoreMax;
+        return $this->image;
     }
 
-    public function setScoreMax(int $scoreMax): static
+    public function setImage(string $image): static
     {
-        $this->scoreMax = $scoreMax;
+        $this->image = $image;
 
         return $this;
     }
@@ -85,7 +85,7 @@ class Rang
     {
         if (!$this->joueurs->contains($joueur)) {
             $this->joueurs->add($joueur);
-            $joueur->setRang($this);
+            $joueur->setThemePion($this);
         }
 
         return $this;
@@ -95,8 +95,8 @@ class Rang
     {
         if ($this->joueurs->removeElement($joueur)) {
             // set the owning side to null (unless already changed)
-            if ($joueur->getRang() === $this) {
-                $joueur->setRang(null);
+            if ($joueur->getThemePion() === $this) {
+                $joueur->setThemePion(null);
             }
         }
 
