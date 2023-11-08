@@ -26,10 +26,10 @@ class BaseController extends AbstractController
         return $this->render('base/rangs.html.twig', [
         ]);
     }
-    #[Route('/classements', name: 'classements')]
+    #[Route('/classement', name: 'classement')]
     public function classe(): Response
     {
-        return $this->render('base/classe.html.twig', [
+        return $this->render('base/classement.html.twig', [
         ]);
     }
 }

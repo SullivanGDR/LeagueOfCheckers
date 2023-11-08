@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+	{{ parent() }}
+	Classement
+{% endblock %}
+
+{% block body %}
+
+	{# Container de la page contenant le classement des joueurs #}
+	<div class="container mt-5 mb-5">
+		<div class="p-3 mt-2 h-100" style="background-color:rgba(31, 41, 55); border-radius: 16px;">
+			<h3 class="text-center text-white mb-3">Classement des joueurs</h3>
+			<div class="container-fluid d-flex text-center text-white">
+				<div class="col-md-3">Nom du joueur</div>
+				<div class="col-md-3">Victoire</div>
+				<div class="col-md-3">Défaite</div>
+				<div class="col-md-3">Rang</div>
+			</div>
+			<hr>
+			<div class="container-fluid d-flex text-center text-white">
+				<div class="col-md-3">Sullivan</div>
+				<div class="col-md-3">20</div>
+				<div class="col-md-3">16</div>
+				<div class="col-md-3">Diamant <img class="img-fluid" src="images/rangs/diamond-icon-mini.png"/></p></div>
+			</div>
+			<hr>
+			<div class="container-fluid d-flex text-center text-white">
+				<div class="col-md-3">Polo</div>
+				<div class="col-md-3">13</div>
+				<div class="col-md-3">7</div>
+				<div class="col-md-3">Maître <img class="img-fluid" src="images/rangs/master-icon-mini.png"/></p></div>
+			</div>
+			<hr>
+			<div class="container-fluid d-flex text-center text-white">
+				<div class="col-md-3">Thoma</div>
+				<div class="col-md-3">16</div>
+				<div class="col-md-3">18</div>
+				<div class="col-md-3">Bronze <img class="img-fluid" src="images/rangs/bronze-icon-mini.png"/></p></div>
+			</div>
+
+		</div>
+	</div>
+</div>{% endblock %}
