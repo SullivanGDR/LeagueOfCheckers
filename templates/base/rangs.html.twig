@@ -33,7 +33,7 @@
 			</div>
 			<div class="container-rang p-4">
 				<img class="img-fluid w-25" src="images/rangs/silver-icon.png"/>
-				<p style="color:#C0C0C0;">Argent</p>
+				<h5 style="color:#C0C0C0;">Argent</h5>
 				<p>500 - 1000</p>
 				<p>Récompenses :</p>
 				<ul class="list-unstyled">
@@ -45,7 +45,7 @@
 			</div>
 			<div class="container-rang p-4">
 				<img class="img-fluid w-25" src="images/rangs/gold-icon.png"/>
-				<p style="color:#FFD700;">Gold</p>
+				<h5 style="color:#FFD700;">Or</h5>
 				<p>1000 - 1500</p>
 				<p>Récompenses :
 				</p>
@@ -58,7 +58,7 @@
 			</div>
 			<div class="container-rang p-4">
 				<img class="img-fluid w-25" src="images/rangs/emerald-icon.png"/>
-				<p style="color:#E5E4E2;">Émeraude</p>
+				<h5 style="color:#50c878;">Émeraude</h5>
 				<p>1500 - 2000</p>
 				<p>Récompenses :
 				</p>
@@ -71,7 +71,7 @@
 			</div>
 			<div class="container-rang p-4">
 				<img class="img-fluid w-25" src="images/rangs/diamond-icon.png"/>
-				<p style="color:#b9f2ff;">Diamant</p>
+				<h5 style="color:#b9f2ff;">Diamant</h5>
 				<p>2000 - 2500</p>
 				<p>Récompenses :
 				</p>
@@ -84,7 +84,7 @@
 			</div>
 			<div class="container-rang p-4">
 				<img class="img-fluid w-25" src="images/rangs/master-icon.png"/>
-				<p style="color:#c36de3;">Maître</p>
+				<h5 style="color:#c36de3;">Maître</h5>
 				<p>2500 +</p>
 				<p>Récompenses :
 				</p>
@@ -95,24 +95,14 @@
 					<li>Obtention du thème de pion<i class="bi bi-square-fill ms-1 me-1" style="color:#1E90FF !important;"></i>Bleu.</li>
 				</ul>
 			</div>
-			<!-- Répétez ces divs pour chaque élément que vous souhaitez afficher -->
 		</div>
+		<ul class="mt-3">
+			<li>Les rangs représentent votre niveau de jeu actuel, actualisé à chaque fin de partie.</li>
+			<li>Plusieurs récompenses sont disponibles pour chaque rangs débloqués.</li>
+			<li>Les récompenses débloqués sont visibles dans votre casier sur votre profil.</li>
+			<li>Votre rang actuel : <img class="img-fluid" style="width:2%;" src="images/rangs/diamond-icon.png"/></li>
+		</ul>
 	</div>
-
-
-	<script>
-		const prevButton = document.querySelector(".prev-button");
-const nextButton = document.querySelector(".next-button");
-const scrollContainer = document.querySelector(".scroll-container");
-
-prevButton.addEventListener("click", () => {
-scrollContainer.scrollLeft -= 432; // Ajustez la valeur de défilement à votre préférence
-});
-
-nextButton.addEventListener("click", () => {
-scrollContainer.scrollLeft += 432; // Ajustez la valeur de défilement à votre préférence
-});
-	</script>
 
 {% endblock %}
 

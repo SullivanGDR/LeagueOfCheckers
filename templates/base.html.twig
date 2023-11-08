@@ -16,6 +16,7 @@
 			<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
 			<link rel="stylesheet" href="css/damier.css">
 			<link rel="stylesheet" href="css/rangs.css">
+			<link rel="stylesheet" href="css/index.css">
 		{% endblock %}
 	</head>
 
@@ -26,7 +27,7 @@
 					<a href="{{path('index')}}">
 						<img class="img-fluid" src="images/logo-damier.png"/>
 					</a>
-					<button class="btn rounded-pill d-none d-lg-block" style="color:#d1d5db;"><i class="bi bi-person-circle fs-4"></i> Compte</button>
+					<button class="btn rounded-pill d-none d-lg-block" style="color:#d1d5db;">Connexion</button>
 					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 						<span style="color:white;" class="navbar-toggler-icon"></span>
 					</button>
@@ -37,7 +38,7 @@
 							<a class="nav-link active d-block d-lg-none container-rang" aria-current="page" href="#">Accueil</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link active d-block d-lg-none" aria-current="page" href="#">Trouver une partie</a>
+							<a class="nav-link active d-block d-lg-none" aria-current="page" href="#">Jouer</a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link active d-block d-lg-none" aria-current="page" href="{{path('rangs')}}">Rangs</a>
@@ -69,10 +70,10 @@
 		<nav class="navbar navbar-expand-lg justify-content-center py-1 d-none d-lg-flex" style="background-color:#111827 !important; color:#9ca3af !important;">
 			<ul class="navbar-nav">
 				<li class="nav-item">
-					<a class="nav-link d-flex align-items-center" aria-current="page" href="{{path('rangs')}}"><svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><style>svg{fill:#e5a50a}</style><path d="M309 106c11.4-7 19-19.7 19-34c0-22.1-17.9-40-40-40s-40 17.9-40 40c0 14.4 7.6 27 19 34L209.7 220.6c-9.1 18.2-32.7 23.4-48.6 10.7L72 160c5-6.7 8-15 8-24c0-22.1-17.9-40-40-40S0 113.9 0 136s17.9 40 40 40c.2 0 .5 0 .7 0L86.4 427.4c5.5 30.4 32 52.6 63 52.6H426.6c30.9 0 57.4-22.1 63-52.6L535.3 176c.2 0 .5 0 .7 0c22.1 0 40-17.9 40-40s-17.9-40-40-40s-40 17.9-40 40c0 9 3 17.3 8 24l-89.1 71.3c-15.9 12.7-39.5 7.5-48.6-10.7L309 106z"/></svg> Rangs</a>
+					<a class="nav-link d-flex align-items-center" aria-current="page" href="{{path('rangs')}}"><svg class="me-1" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><style>svg{fill:#e5a50a}</style><path d="M309 106c11.4-7 19-19.7 19-34c0-22.1-17.9-40-40-40s-40 17.9-40 40c0 14.4 7.6 27 19 34L209.7 220.6c-9.1 18.2-32.7 23.4-48.6 10.7L72 160c5-6.7 8-15 8-24c0-22.1-17.9-40-40-40S0 113.9 0 136s17.9 40 40 40c.2 0 .5 0 .7 0L86.4 427.4c5.5 30.4 32 52.6 63 52.6H426.6c30.9 0 57.4-22.1 63-52.6L535.3 176c.2 0 .5 0 .7 0c22.1 0 40-17.9 40-40s-17.9-40-40-40s-40 17.9-40 40c0 9 3 17.3 8 24l-89.1 71.3c-15.9 12.7-39.5 7.5-48.6-10.7L309 106z"/></svg> Rangs</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" aria-current="page" href="#">Trouver une partie</a>
+					<a class="nav-link" aria-current="page" href="#">Jouer</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" aria-current="page" href="#">Classement</a>

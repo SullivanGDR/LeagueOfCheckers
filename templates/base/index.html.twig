@@ -6,6 +6,92 @@
 
 {% block body %}
 
+{# Container de la page contenant la partie de gauche et de droite #}
 
+<div class="container d-flex mt-5 mb-5">
+	{# Colonne de gauche #}
+	<div class="col-md-8 me-1 h-100">
+		{# Première div de gauche (présentation) #}
+		<div class="p-3" style="background-color:rgba(31, 41, 55); border-radius: 16px;">
+			<p>Bonjour à tous,</p>
+			<p>Nous sommes Sullivan, Thoma et Paul, trois étudiants du BTS SIO (Services Informatiques aux Organisations) au sein du lycée Guy Mollet à Arras.</p>
+			<p>Nous sommes ravis de vous présenter notre projet actuel, qui incarne notre engagement envers l'informatique et notre créativité. Pour l'occasion du Salon de l'Étudiant 2023, nous avons développé un jeu de dames en ligne. Ce jeu classique est désormais accessible à tous, à partir de n'importe quel appareil connecté à Internet. Notre objectif était de créer une expérience ludique et conviviale tout en démontrant nos compétences en développement web et en conception de jeux.</p>
+			<p>Nous vous invitons à venir découvrir notre projet au Salon de l'Étudiant 2023. Notre équipe sera présente pour vous montrer en direct notre jeu de dames en ligne, discuter de nos réalisations et de nos ambitions futures, et répondre à toutes vos questions. Nous sommes impatients de partager notre passion pour la technologie et l'informatique avec vous.</p>
+		</div>
+		{# Deuxième div de gauche (rejoindre ou inviter) #}
+		<div class="p-3 mt-2" style="background-color:rgba(31, 41, 55); border-radius: 16px;">
+			<div class="text-center">
+				<h3 class="text-white"><i class="bi bi-people"></i> Party Mode</h3>
+			</div>
+			<div class="text-center">
+				<p>Jouez avec vos amis grâce au lien d'invitation</p>
+				<button type="button" style="outline: none;" class="btn btn-outline-info">Créer une partie</button>
+				<p>Ou</p>
+				<h4 class="text-white">Rejoindre une partie</h4>
+				<div class="d-inline-block rounded-3 p-1 bg-white">
+					<input class="me-1 inputJoinParty" type="text" id="joinPartyForm" placeholder="Code de la partie">
+					<button class="btnJoinParty" type="submit">Rejoindre</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	{# Colonne de droite #}
+	<div class="col-md-4 ms-1 flex-grow-1">
+		<div class="d-flex flex-column h-100">
+			<div class="p-3" style="background-color: rgba(31, 41, 55); border-radius: 16px;">
+				<div class="text-center">
+					<p class="m-0 mb-2  text-white">Joueur</p>
+				</div>
+				<div class="d-flex">
+					<div class="text-center me-2">
+						<img class="img-fluid" src="images/profile.jpeg"/>
+					</div>
+					<div class="d-flex flex-column justify-content-between flex-grow-1">
+						<div class="text-white p-1 border border-white rounded-2 mt-0 p-2">
+							<span>Rang :</span>
+							<img class="img-fluid mx-auto" src="images/rangs/master-icon-mini.png"/>
+						</div>
+						<div class="text-white p-1 border border-white rounded-2 mt-0 p-2">
+							<span>Monnaie : 182 <i class="bi bi-coin text-warning"></i></span>
+						</div>
+					</div>
+				</div>
+				<div>
+					<p>Nombre de partie(s) : </p>
+					<p>Nombre de victoire(s) / défaite(s) :</p>
+				</div>
+			</div>
+			<div class="p-3 mt-2 h-100" style="background-color:rgba(31, 41, 55); border-radius: 16px;">
+				<h3 class="text-center text-white mb-3">Top joueurs</h3>	
+				<div class="d-flex justify-content-between">
+					<p style="margin: 0;">1. Joueur 561</p>
+					<p style="margin: 0;">Rang : <img class="img-fluid" src="images/rangs/master-icon-mini.png"/></p>
+				</div>
+				<hr>
+				<div class="d-flex justify-content-between">
+					<p style="margin: 0;">2. Joueur 31</p>
+					<p style="margin: 0;">Rang : <img class="img-fluid" src="images/rangs/master-icon-mini.png"/></p>
+				</div>
+				<hr>
+				<div class="d-flex justify-content-between">
+					<p style="margin: 0;">3. Joueur 61</p>
+					<p style="margin: 0;">Rang : <img class="img-fluid" src="images/rangs/master-icon-mini.png"/></p>
+				</div>
+				<hr>
+				<div class="d-flex justify-content-between">
+					<p style="margin: 0;">4. Joueur 164</p>
+					<p style="margin: 0;">Rang : <img class="img-fluid" src="images/rangs/master-icon-mini.png"/></p>
+				</div>
+				<hr>
+				<div class="d-flex justify-content-between">
+					<p style="margin: 0;">5. Joueur 698</p>
+					<p style="margin: 0;">Rang : <img class="img-fluid" src="images/rangs/master-icon-mini.png"/></p>
+				</div>
+				<div class="text-center mt-3">
+					<button type="button" style="outline: none;" class="btn btn-outline-info">Voir le classement</button>
+				</div>
+			</div>
+		</div>
+	</div>
 
 {% endblock %}
