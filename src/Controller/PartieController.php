@@ -57,6 +57,7 @@ class PartieController extends AbstractController
         $entityManagerInterface->flush();
 
         return $this->render('partie/index.html.twig', [
+            "partie" => $partie,
         ]);
     }
 }

@@ -1,11 +1,9 @@
 .damier {
-    width: 800px; /* Ajustez la largeur et la hauteur selon vos besoins */
-    height: 800px;
+    width: 700px; /* Ajustez la largeur et la hauteur selon vos besoins */
+    height: 700px;
     display: grid;
     grid-template-columns: repeat(10, 1fr); /* 8 colonnes pour un damier 8x8 */
     grid-template-rows: repeat(10, 1fr); /* 8 lignes pour un damier 8x8 */
-	border: 4mm ridge rgba(211, 220, 50, .6);
-	border-radius: 5px;
 }
 
 .case {
@@ -81,4 +79,28 @@
 
 a {
     color:#d1d5db !important;
+}
+
+/* Styles pour la barre de défilement verticale */
+::-webkit-scrollbar {
+    width: 10px; /* Ajustez la largeur de la barre de défilement selon vos préférences */
+}
+
+::-webkit-scrollbar-track {
+    background: none; /* Aucun arrière-plan */
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: rgba(31, 41, 55); /* Couleur de la barre de défilement */
+    border-radius: 3px; /* Arrondi des coins de la barre de défilement */
+}
+
+/* Styles pour la barre de défilement horizontale (optionnelle) */
+::-webkit-scrollbar-horizontal {
+    height: 6px; /* Ajustez la hauteur de la barre de défilement horizontale */
+}
+
+::-webkit-scrollbar-thumb:horizontal {
+    background-color: rgba(31, 41, 55); /* Couleur de la barre de défilement horizontale */
+    border-radius: 3px; /* Arrondi des coins de la barre de défilement horizontale */
 }
