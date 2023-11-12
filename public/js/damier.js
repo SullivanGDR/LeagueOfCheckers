@@ -1,5 +1,10 @@
-createDamier();
-console.log(document.getElementById('damier'))
+import { patchEtatPlateau,getNbCoupJN,getNbCoupJB,patchAddNbCoupJN,patchAddNbCoupJB,getNbTour,patchAddNbTour,getNbPionJB,getNbPionJN,patchDellNbPionJB,patchDellNbPionJN,getEtatPlateau } from "./api/partie_api.js";
+export {createDamier}
+// patchEtatPlateau(1,document.getElementById('damier').innerHTML)
+// getEtatPlateau(1)
+// document.getElementById('damier').innerHTML=getEtatPlateau(1)
+
+//console.log(document.getElementById('damier'))
 var pionS=null;
 var caseMove=null;
 function createDamier() {
@@ -195,16 +200,6 @@ function selectCase() {
         console.log("=========");
     }
 }
-
-
-
-
-
-
-
-
-
-
 
 function mme() {
     var blanc =document.getElementsByClassName("pion-blanc")

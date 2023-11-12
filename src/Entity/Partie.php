@@ -3,13 +3,18 @@
 namespace App\Entity;
 
 use App\Repository\PartieRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Patch;
+use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Metadata\Get;
 
 #[ApiResource(operations:[
-    new Patch()
+    new Patch(normalizationContext:['groups'=>'partie:item']),
+    new Get(normalizationContext:['groups'=>'partie:item'])
 ])]
 #[ORM\Entity(repositoryClass: PartieRepository::class)]
 class Partie
@@ -23,24 +28,30 @@ class Partie
     private ?\DateTimeInterface $datePartie = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups(['partie:item'])]
     private ?array $etatPlateau = null;
 
     #[ORM\Column]
+    #[Groups(['partie:item'])]
     private ?int $nbCoupJN = null;
 
     #[ORM\Column]
+    #[Groups(['partie:item'])]
     private ?int $nbCoupJB = null;
 
     #[ORM\Column(type: Types::TIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $timer = null;
 
     #[ORM\Column]
+    #[Groups(['partie:item'])]
     private ?int $nbTour = null;
 
     #[ORM\Column]
+    #[Groups(['partie:item'])]
     private ?int $nbPionN = null;
 
     #[ORM\Column]
+    #[Groups(['partie:item'])]
     private ?int $nbPionB = null;
 
     #[ORM\Column(length: 255)]
@@ -55,6 +66,14 @@ class Partie
 
     #[ORM\ManyToOne(inversedBy: 'parties')]
     private ?Joueur $winner = null;
+
+    #[ORM\ManyToMany(targetEntity: Deplacement::class, inversedBy: 'parties')]
+    private Collection $deplacement;
+
+    public function __construct()
+    {
+        $this->deplacement = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -201,6 +220,30 @@ class Partie
     public function setWinner(?Joueur $winner): static
     {
         $this->winner = $winner;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Deplacement>
+     */
+    public function getDeplacement(): Collection
+    {
+        return $this->deplacement;
+    }
+
+    public function addDeplacement(Deplacement $deplacement): static
+    {
+        if (!$this->deplacement->contains($deplacement)) {
+            $this->deplacement->add($deplacement);
+        }
+
+        return $this;
+    }
+
+    public function removeDeplacement(Deplacement $deplacement): static
+    {
+        $this->deplacement->removeElement($deplacement);
 
         return $this;
     }
