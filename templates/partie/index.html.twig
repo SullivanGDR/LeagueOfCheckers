@@ -1,19 +1,148 @@
 {% extends 'base.html.twig' %}
+
 {% block title %}
 	{{ parent() }}
-	{# Partie {{ partie.id }} #}
+	Partie {{ partie.id }}
 {% endblock %}
 
 {% block body %}
-<div class="container d-flex justify-content-center">
-    <div class="damier" id="damier">
-    
+
+<div class="container-fluid d-flex justify-content-center p-5">
+    <div class="p-3 col-md-3 me-2 d-flex" style="background-color:rgba(31, 41, 55); border-radius: 16px;">
+        <div class="h-100 w-100 overflow-auto align-self-center" style="background-color:#374151; border: 15px solid; border-radius: 16px; border-color:#374151; max-height: 700px;">
+            <p class="text-white text-center p-2" style="background-color:rgba(31, 41, 55); border-radius: 16px;">Déplacement du joueur Blanc : [x,y] <i class="bi bi-arrow-right"></i> [x,y]</p>
+            <p class="text-white text-center p-2" style="background-color:rgba(31, 41, 55); border-radius: 16px;">Déplacement du joueur Noir : [x,y] <i class="bi bi-arrow-right"></i> [x,y]</p>
+            <p class="text-white text-center p-2" style="background-color:rgba(31, 41, 55); border-radius: 16px;">Déplacement du joueur Blanc : [x,y] <i class="bi bi-arrow-right"></i> [x,y]</p>
+            <p class="text-white text-center p-2" style="background-color:rgba(31, 41, 55); border-radius: 16px;">Déplacement du joueur Noir : [x,y] <i class="bi bi-arrow-right"></i> [x,y]</p>
+            <p class="text-white text-center p-2" style="background-color:rgba(31, 41, 55); border-radius: 16px;">Déplacement du joueur Blanc : [x,y] <i class="bi bi-arrow-right"></i> [x,y]</p>
+            <p class="text-white text-center p-2" style="background-color:rgba(31, 41, 55); border-radius: 16px;">Déplacement du joueur Noir : [x,y] <i class="bi bi-arrow-right"></i> [x,y]</p>
+            <p class="text-white text-center p-2" style="background-color:rgba(31, 41, 55); border-radius: 16px;">Déplacement du joueur Blanc : [x,y] <i class="bi bi-arrow-right"></i> [x,y]</p>
+            <p class="text-white text-center p-2" style="background-color:rgba(31, 41, 55); border-radius: 16px;">Déplacement du joueur Noir : [x,y] <i class="bi bi-arrow-right"></i> [x,y]</p>
+            <p class="text-white text-center p-2" style="background-color:rgba(31, 41, 55); border-radius: 16px;">Déplacement du joueur Blanc : [x,y] <i class="bi bi-arrow-right"></i> [x,y]</p>
+            <p class="text-white text-center p-2" style="background-color:rgba(31, 41, 55); border-radius: 16px;">Déplacement du joueur Noir : [x,y] <i class="bi bi-arrow-right"></i> [x,y]</p>
+            <p class="text-white text-center p-2" style="background-color:rgba(31, 41, 55); border-radius: 16px;">Déplacement du joueur Blanc : [x,y] <i class="bi bi-arrow-right"></i> [x,y]</p>
+            <p class="text-white text-center p-2" style="background-color:rgba(31, 41, 55); border-radius: 16px;">Déplacement du joueur Noir : [x,y] <i class="bi bi-arrow-right"></i> [x,y]</p>
+            <p class="text-white text-center p-2" style="background-color:rgba(31, 41, 55); border-radius: 16px;">Déplacement du joueur Blanc : [x,y] <i class="bi bi-arrow-right"></i> [x,y]</p>
+            <p class="text-white text-center p-2" style="background-color:rgba(31, 41, 55); border-radius: 16px;">Déplacement du joueur Noir : [x,y] <i class="bi bi-arrow-right"></i> [x,y]</p>
+            <p class="text-white text-center p-2" style="background-color:rgba(31, 41, 55); border-radius: 16px;">Déplacement du joueur Blanc : [x,y] <i class="bi bi-arrow-right"></i> [x,y]</p>
+            <p class="text-white text-center p-2" style="background-color:rgba(31, 41, 55); border-radius: 16px;">Déplacement du joueur Noir : [x,y] <i class="bi bi-arrow-right"></i> [x,y]</p>
+            <p class="text-white text-center p-2" style="background-color:rgba(31, 41, 55); border-radius: 16px;">Déplacement du joueur Blanc : [x,y] <i class="bi bi-arrow-right"></i> [x,y]</p>
+            <p class="text-white text-center p-2" style="background-color:rgba(31, 41, 55); border-radius: 16px;">Déplacement du joueur Noir : [x,y] <i class="bi bi-arrow-right"></i> [x,y]</p>
+            <p class="text-white text-center p-2" style="background-color:rgba(31, 41, 55); border-radius: 16px;">Déplacement du joueur Blanc : [x,y] <i class="bi bi-arrow-right"></i> [x,y]</p>
+            <p class="text-white text-center p-2" style="background-color:rgba(31, 41, 55); border-radius: 16px;">Déplacement du joueur Noir : [x,y] <i class="bi bi-arrow-right"></i> [x,y]</p>
+            <p class="text-white text-center p-2" style="background-color:rgba(31, 41, 55); border-radius: 16px;">Déplacement du joueur Blanc : [x,y] <i class="bi bi-arrow-right"></i> [x,y]</p>
+            <p class="text-white text-center p-2" style="background-color:rgba(31, 41, 55); border-radius: 16px;">Déplacement du joueur Noir : [x,y] <i class="bi bi-arrow-right"></i> [x,y]</p>
+            <p class="text-white text-center p-2" style="background-color:rgba(31, 41, 55); border-radius: 16px;">Déplacement du joueur Blanc : [x,y] <i class="bi bi-arrow-right"></i> [x,y]</p>
+            <p class="text-white text-center p-2" style="background-color:rgba(31, 41, 55); border-radius: 16px;">Déplacement du joueur Noir : [x,y] <i class="bi bi-arrow-right"></i> [x,y]</p>
+        </div>
+    </div>
+    <div class="d-flex justify-content-center p-3" style="background-color:rgba(31, 41, 55); border-radius: 16px;">
+        <div class="damier align-self-center" id="damier" style="border:15px solid; border-color:#374151; border-radius: 16px;">
+        
+        </div>
+    </div>
+    <div class="col-md-3 d-flex flex-column justify-content-between ms-2">
+        <div class="p-3 mb-2" style="background-color: rgba(31, 41, 55); border-radius: 16px;">
+            <div class="text-center">
+                <p class="m-0 mb-2 text-white text-capitalize">{{ partie.joueurN.username }}</p>
+            </div>
+            <hr>
+            <div class="d-flex">
+                <div class="text-center me-2">
+                    {% set imageProfil = 'images/profile.jpeg' %}
+                    <img class="img-fluid" src="{{asset(imageProfil)}}"/>
+                </div>
+                <div class="d-flex flex-column justify-content-between flex-grow-1">
+                    <div class="text-white p-1 border border-white rounded-2 mt-0 p-2">
+                        <span>Rang : {{ partie.joueurN.rang.libelle }}</span>
+                        {# <img class="img-fluid mx-auto" src="images/rangs/master-icon-mini.png"/> #}
+                    </div>
+                    <div class="text-white p-1 border border-white rounded-2 mt-0 p-2">
+                        <span>Monnaie : {{ partie.joueurN.monnaie }} <i class="bi bi-coin text-warning"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <p>Nombre de partie(s) : {{ partie.joueurN.nbTotalePartie }}</p>
+                <p>Nombre de victoire(s) / défaite(s) : {{ partie.joueurN.nbVictoire }}/{{ partie.joueurN.nbDefaite }}</p>
+            </div>
+            <hr>
+            {% if app.user == partie.joueurN %}
+                <p class="text-center text-white">Vous êtes le joueur Noir</p>
+            {% endif %}
+        </div>
+        <div class="p-3 h-100" style="background-color: rgba(31, 41, 55); border-radius: 16px;">
+            <div class="text-center">
+                <p class="m-0 mb-2 text-white text-capitalize">Timer</p>
+            </div>
+            <hr>
+            <p class="text-white text-center">En attente du lancement de la partie ..</p>
+        </div>
+        {% if partie.joueurB == null %}
+        <div class="p-3 mt-2" style="background-color: rgba(31, 41, 55); border-radius: 16px;">
+            <div class="text-center">
+                <p class="m-0 mb-2 text-white">Attente d'un joueur ..</p>
+            </div>
+            <hr>
+            <div class="d-flex">
+                <div class="text-center me-2">
+                    <img class="img-fluid" src="{{asset(imageProfil)}}"/>
+                </div>
+                <div class="d-flex flex-column justify-content-between flex-grow-1">
+                    <div class="text-white p-1 border border-white rounded-2 mt-0 p-2">
+                        <span>Rang : -</span>
+                        {# <img class="img-fluid mx-auto" src="images/rangs/master-icon-mini.png"/> #}
+                    </div>
+                    <div class="text-white p-1 border border-white rounded-2 mt-0 p-2">
+                        <span>Monnaie : - <i class="bi bi-coin text-warning"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <p>Nombre de partie(s) : -</p>
+                <p>Nombre de victoire(s) / défaite(s) : -/-</p>
+            </div>
+            <hr>
+            {% if app.user == partie.joueurB %}
+                <p class="text-center text-white">Vous êtes le joueur Noir</p>
+            {% endif %}
+        </div>
+        {% else %}
+        <div class="p-3" style="background-color: rgba(31, 41, 55); border-radius: 16px;">
+            <div class="text-center">
+                <p class="m-0 mb-2 text-white text-capitalize">{{ partie.joueurB.username }}</p>
+            </div>
+            <hr>
+            <div class="d-flex">
+                <div class="text-center me-2">
+                    <img class="img-fluid" src="{{asset(imageProfil)}}"/>
+                </div>
+                <div class="d-flex flex-column justify-content-between flex-grow-1">
+                    <div class="text-white p-1 border border-white rounded-2 mt-0 p-2">
+                        <span>Rang : {{ partie.joueurB.rang.libelle }}</span>
+                        {# <img class="img-fluid mx-auto" src="images/rangs/master-icon-mini.png"/> #}
+                    </div>
+                    <div class="text-white p-1 border border-white rounded-2 mt-0 p-2">
+                        <span>Monnaie : {{ partie.joueurB.monnaie }} <i class="bi bi-coin text-warning"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <p>Nombre de partie(s) : {{ partie.joueurB.nbTotalePartie }}</p>
+                <p>Nombre de victoire(s) / défaite(s) : {{ partie.joueurB.nbVictoire }}/{{ partie.joueurB.nbDefaite }}</p>
+            </div>
+            <hr>
+            {% if app.user == partie.joueurB %}
+                <p class="text-center text-white">Vous êtes le joueur Noir</p>
+            {% endif %}
+        </div>
+        {% endif %}
     </div>
 </div>
-
 
 {% endblock %}
     
 {% block javascripts %}
-    <script type="text/javascript" src="js/damier.js"></script>
+    {% set url = 'js/damier.js' %}
+    <script type="text/javascript" src="{{asset(url)}}"></script>
 {% endblock %}

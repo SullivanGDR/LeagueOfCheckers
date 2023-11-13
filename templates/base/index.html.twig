@@ -25,12 +25,14 @@
 			</div>
 			<div class="text-center">
 				<p>Jouez avec vos amis grâce au lien d'invitation</p>
-				<button type="button" style="outline: none;" class="btn btn-outline-info">Créer une partie</button>
+				<form action="{{path('creation-partie')}}">
+					<button type="submit" style="outline: none;" class="btn btn-outline-info">Créer une partie</button>
+				</form>
 				<p>Ou</p>
 				<h4 class="text-white">Rejoindre une partie</h4>
 				<div class="d-inline-block rounded-3 p-1 bg-white">
 					<input class="me-1 inputJoinParty" type="text" id="joinPartyForm" placeholder="Code de la partie">
-					<button class="btnJoinParty" type="submit">Rejoindre</button>
+					<button class="btnJoinParty" type="submit" id="joinPartyButton">Rejoindre</button>
 				</div>
 			</div>
 		</div>
@@ -93,5 +95,35 @@
 			</div>
 		</div>
 	</div>
+
+<script>
+	document.addEventListener('DOMContentLoaded', function () {
+    const joinPartyButton = document.getElementById('joinPartyButton');
+    const joinPartyInput = document.getElementById('joinPartyForm');
+
+    joinPartyButton.addEventListener('click', function () {
+        const codePartie = joinPartyInput.value;
+        // Effectuez une vérification asynchrone pour savoir si la partie existe.
+        checkIfPartieExists(codePartie);
+    });
+
+    function checkIfPartieExists(codePartie) {
+    // Vous devez implémenter une requête asynchrone pour vérifier si la partie existe.
+    fetch(`https://s3-4674.nuage-peda.fr/damier/public/partie/${codePartie}`)
+        .then(response => {
+            if (response.status === 200) {
+                // La partie existe, redirigez l'utilisateur vers la page de la partie.
+                window.location.href = `https://s3-4674.nuage-peda.fr/damier/public/partie/${codePartie}`;
+            } else {
+                // La partie n'existe pas, faites quelque chose en conséquence (par exemple, affichez un message d'erreur).
+                console.log('La partie n\'existe pas.');
+            }
+        })
+        .catch(error => {
+            console.error('Erreur lors de la vérification de la partie : ', error);
+        });
+}
+});
+</script>
 
 {% endblock %}
