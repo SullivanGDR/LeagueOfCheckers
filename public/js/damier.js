@@ -91,7 +91,7 @@ function select() {
 
 function moove() {
     if (pionS !== null) {
-        caseChoisis = this
+        let caseChoisis = this
         //console.log(caseChoisis)
         if (caseChoisis.style.backgroundColor == "blue") {
             pionS.parentElement.removeChild(pionS);
@@ -104,7 +104,7 @@ function moove() {
 
 function moove2() {
     if (pionS !== null) {
-        caseChoisis = caseMove
+        let caseChoisis = caseMove
         //console.log(caseChoisis)
         console.log("manger1")
         if (caseChoisis.style.backgroundColor == "blue") {
