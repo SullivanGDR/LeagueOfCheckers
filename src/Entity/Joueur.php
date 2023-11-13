@@ -9,7 +9,13 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
+use Symfony\Component\Serializer\Annotation\Groups;
 
+#[ApiResource(operations:[
+    new Get(normalizationContext:['groups'=>'joueur:item'])
+])]
 #[ORM\Entity(repositoryClass: JoueurRepository::class)]
 #[UniqueEntity(fields: ['username'], message: 'There is already an account with this username')]
 class Joueur implements UserInterface, PasswordAuthenticatedUserInterface
@@ -17,9 +23,11 @@ class Joueur implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['joueur:item'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
+    #[Groups(['joueur:item'])]
     private ?string $username = null;
 
     #[ORM\Column]
@@ -32,12 +40,15 @@ class Joueur implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $password = null;
 
     #[ORM\Column]
+    #[Groups(['joueur:item'])]
     private ?int $nbVictoire = null;
 
     #[ORM\Column]
+    #[Groups(['joueur:item'])]
     private ?int $nbDefaite = null;
 
     #[ORM\Column]
+    #[Groups(['joueur:item'])]
     private ?int $nbTotalePartie = null;
 
     #[ORM\ManyToOne(inversedBy: 'joueurs')]
@@ -54,6 +65,7 @@ class Joueur implements UserInterface, PasswordAuthenticatedUserInterface
     private Collection $mouvements;
 
     #[ORM\Column]
+    #[Groups(['joueur:item'])]
     private ?int $monnaie = null;
 
     public function __construct()

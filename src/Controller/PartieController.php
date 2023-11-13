@@ -23,8 +23,8 @@ class PartieController extends AbstractController
         $partie->setNbCoupJB(0);
         $partie->setNbCoupJN(0);
         $partie->setNbTour(0);
-        $partie->setNbPionN(0);
-        $partie->setNbPionB(0);
+        $partie->setNbPionN(20);
+        $partie->setNbPionB(20);
         $partie->setCodePartie(''.$partie->getId());
 
         $entityManagerInterface->persist($partie);
