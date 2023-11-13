@@ -44,8 +44,8 @@ async function createMouvement(emplacementX,emplacementY,idJoueur,typeMouv){
           //on va nous afficher l'erreur qu'on nous a retourner
       }
       const r = await response.json();
-      console.log(r);
-      return r;
+      //console.log(r.id);
+      return r.id;
   }
   catch(erreur){
       console.error('Erreur lors de lauthentification: ',erreur);
