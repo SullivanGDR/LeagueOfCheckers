@@ -25,7 +25,7 @@ async function patchEtatPlateau(idPartie,plateau){
         }
         const r = await response.json();
         console.log(r);
-        return r.token;
+        return r;
     }
     catch(erreur){
         console.error('Erreur lors de lauthentification: ',erreur);

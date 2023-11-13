@@ -1,3 +1,5 @@
+import { createDeplacement } from "./api/deplacement_api.js";
+import { getMouvement,createMouvement,patchArriveMouvement } from "./api/mouvement_api.js";
 import { patchEtatPlateau,getNbCoupJN,getNbCoupJB,patchAddNbCoupJN,patchAddNbCoupJB,getNbTour,patchAddNbTour,getNbPionJB,getNbPionJN,patchDellNbPionJB,patchDellNbPionJN,getEtatPlateau } from "./api/partie_api.js";
 export {createDamier}
 // patchEtatPlateau(1,document.getElementById('damier').innerHTML)
@@ -89,20 +91,26 @@ function select() {
     }
 }
 
-function moove() {
+async function moove() {
     if (pionS !== null) {
         let caseChoisis = this
         //console.log(caseChoisis)
         if (caseChoisis.style.backgroundColor == "blue") {
+            let departX=pionS.parentElement.dataset.x
+            let departY=pionS.parentElement.dataset.y
+            let idMouv=await createMouvement(parseInt(departX),parseInt(departY),3,"simple")
+            createDeplacement(parseInt(idMouv),1,parseInt(departX),parseInt(departY),parseInt(caseChoisis.dataset.x),parseInt(caseChoisis.dataset.y))
+            patchArriveMouvement(parseInt(idMouv),parseInt(caseChoisis.dataset.x),parseInt(caseChoisis.dataset.y))
             pionS.parentElement.removeChild(pionS);
             caseChoisis.appendChild(pionS);
             resetCase();
             resetSelectPion();
+            patchEtatPlateau(1,document.getElementById('damier').innerHTML)
         }
     }
 }
 
-function moove2() {
+async function moove2() {
     if (pionS !== null) {
         let caseChoisis = caseMove
         //console.log(caseChoisis)
@@ -110,10 +118,16 @@ function moove2() {
         if (caseChoisis.style.backgroundColor == "blue") {
             console.log("manger")
             console.log(pionS)
+            let departX=pionS.parentElement.dataset.x
+            let departY=pionS.parentElement.dataset.y
+            let idMouv=await createMouvement(parseInt(departX),parseInt(departY),3,"saut")
+            createDeplacement(parseInt(idMouv),1,parseInt(departX),parseInt(departY),parseInt(caseChoisis.dataset.x),parseInt(caseChoisis.dataset.y))
+            patchArriveMouvement(parseInt(idMouv),parseInt(caseChoisis.dataset.x),parseInt(caseChoisis.dataset.y))
             pionS.parentElement.removeChild(pionS);
             caseChoisis.appendChild(pionS);
             resetCase();
             resetSelectPion();
+            patchEtatPlateau(1,document.getElementById('damier').innerHTML)
         }
     }
 }
