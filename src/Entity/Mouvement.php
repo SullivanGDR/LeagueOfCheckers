@@ -9,10 +9,13 @@ use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Get;
+use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Metadata\Patch;
 
 #[ApiResource(operations:[
-    new Post(),
-    new Get()
+    new Post(normalizationContext:['groups'=>'mouvement:item']),
+    new Get(),
+    new Patch(normalizationContext:['groups'=>'mouvement:item'])
 ])]
 #[ORM\Entity(repositoryClass: MouvementRepository::class)]
 class Mouvement
@@ -20,21 +23,27 @@ class Mouvement
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['deplacement:list','mouvement:item'])]
     private ?int $id = null;
 
     #[ORM\Column]
+    #[Groups(['deplacement:list','mouvement:item'])]
     private ?int $emplacementX = null;
 
     #[ORM\Column]
+    #[Groups(['deplacement:list','mouvement:item'])]
     private ?int $emplacementY = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
+    #[Groups(['deplacement:list'])]
     private ?int $arriveX = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
+    #[Groups(['deplacement:list'])]
     private ?int $arriveY = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['mouvement:item'])]
     private ?string $typeMouv = null;
 
     #[ORM\OneToMany(mappedBy: 'mouvement', targetEntity: Deplacement::class, orphanRemoval: true)]

@@ -1,5 +1,10 @@
-createDamier();
-console.log(document.getElementById('damier'))
+import { patchEtatPlateau,getNbCoupJN,getNbCoupJB,patchAddNbCoupJN,patchAddNbCoupJB,getNbTour,patchAddNbTour,getNbPionJB,getNbPionJN,patchDellNbPionJB,patchDellNbPionJN,getEtatPlateau } from "./api/partie_api.js";
+export {createDamier}
+// patchEtatPlateau(1,document.getElementById('damier').innerHTML)
+// getEtatPlateau(1)
+// document.getElementById('damier').innerHTML=getEtatPlateau(1)
+
+//console.log(document.getElementById('damier'))
 var pionS=null;
 var caseMove=null;
 function createDamier() {
@@ -86,7 +91,7 @@ function select() {
 
 function moove() {
     if (pionS !== null) {
-        caseChoisis = this
+        let caseChoisis = this
         //console.log(caseChoisis)
         if (caseChoisis.style.backgroundColor == "blue") {
             pionS.parentElement.removeChild(pionS);
@@ -99,7 +104,7 @@ function moove() {
 
 function moove2() {
     if (pionS !== null) {
-        caseChoisis = caseMove
+        let caseChoisis = caseMove
         //console.log(caseChoisis)
         console.log("manger1")
         if (caseChoisis.style.backgroundColor == "blue") {
@@ -195,16 +200,6 @@ function selectCase() {
         console.log("=========");
     }
 }
-
-
-
-
-
-
-
-
-
-
 
 function mme() {
     var blanc =document.getElementsByClassName("pion-blanc")

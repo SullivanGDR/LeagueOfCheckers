@@ -16,15 +16,16 @@ class PartieController extends AbstractController
     public function index(Request $request , EntityManagerInterface $entityManagerInterface, SluggerInterface $slugger): Response
     {
         $user = $this->getUser();
-        
+
         $partie = new Partie();
-        $partie->setNbCoupJ1(0);
-        $partie->setNbCoupJ2(0);
-        $partie->setCodePartie("test");
-        $partie->setEtatPartie(0);
-        $partie->setEtatPlateau(0);
+        $partie->setJoueurN($user);
         $partie->setDatePartie(new \Datetime);
-        $partie->setJoueur1($user);
+        $partie->setNbCoupJB(0);
+        $partie->setNbCoupJN(0);
+        $partie->setNbTour(0);
+        $partie->setNbPionN(20);
+        $partie->setNbPionB(20);
+        $partie->setCodePartie(''.$partie->getId());
 
         $entityManagerInterface->persist($partie);
         $entityManagerInterface->flush();
@@ -41,10 +42,15 @@ class PartieController extends AbstractController
 
         $user = $this->getUser();
 
-        if($partie->getJoueur1() == $user) {
-            return $this->redirectToRoute('partie', ['id' => $partie->getId()]);
+        if ($partie->getJoueurB() === null || $partie->getJoueurB() === $user) { // Condition pour attribuer le joueur B.
+            if ($partie->getJoueurN() != $user) {
+                $partie->setJoueurB($user);
+            }
+        } else if ($partie->getJoueurN() === $user) { // Si le joueur N rejoint ont le remets à sa place.
+            $partie->setJoueurN($user);
         } else {
-            $partie->setJoueur2($user);
+            // La partie est déjà pleine, rediriger vers l'index.
+            return $this->redirectToRoute('index');
         }
 
         $entityManagerInterface->persist($partie);
