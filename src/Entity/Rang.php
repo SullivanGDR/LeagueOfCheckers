@@ -27,6 +27,15 @@ class Rang
     #[ORM\OneToMany(mappedBy: 'rang', targetEntity: Joueur::class)]
     private Collection $joueurs;
 
+    #[ORM\Column(length: 255)]
+    private ?string $logo = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $miniLogo = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $couleur = null;
+
     public function __construct()
     {
         $this->joueurs = new ArrayCollection();
@@ -99,6 +108,42 @@ class Rang
                 $joueur->setRang(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getLogo(): ?string
+    {
+        return $this->logo;
+    }
+
+    public function setLogo(string $logo): static
+    {
+        $this->logo = $logo;
+
+        return $this;
+    }
+
+    public function getMiniLogo(): ?string
+    {
+        return $this->miniLogo;
+    }
+
+    public function setMiniLogo(string $miniLogo): static
+    {
+        $this->miniLogo = $miniLogo;
+
+        return $this;
+    }
+
+    public function getCouleur(): ?string
+    {
+        return $this->couleur;
+    }
+
+    public function setCouleur(string $couleur): static
+    {
+        $this->couleur = $couleur;
 
         return $this;
     }
