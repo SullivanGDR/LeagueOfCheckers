@@ -36,9 +36,26 @@
 							<button class="btn rounded-pill" style="color:#d1d5db; background-color: #6d28d9;">Jouer</button>
 						</a>
 					</div>
-					<a href="{{ path('app_login') }}" class="align-self-center">
-						<button class="btn rounded-pill" style="color:#d1d5db; background-color: #6d28d9;">Connexion</button>
-					</a>
+					{% if app.user %}
+						<div class="dropdown">
+							<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+								{{ app.user.username }}
+							</a>
+							<ul class="dropdown-menu" style="background-color:#1f2937 !important; color:#9ca3af !important;">
+								<li>
+									<a class="dropdown-item bg-transparent" href="#">Profil</a>
+								</li>
+								<li><hr class="dropdown-divider"></li>
+								<li>
+									<a class="dropdown-item bg-transparent" href="{{ path('app_logout') }}">Se déconnecter</a>
+								</li>
+							</ul>
+						</div>
+					{% else %}
+						<a href="{{ path('app_login') }}" class="align-self-center">
+							<button class="btn rounded-pill" style="color:#d1d5db; background-color: #6d28d9;">Connexion</button>
+						</a>
+					{% endif %}
 					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 						<span style="color:white;" class="navbar-toggler-icon"></span>
 					</button>

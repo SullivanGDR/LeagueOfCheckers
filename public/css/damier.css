@@ -104,3 +104,7 @@ a {
     background-color: rgba(31, 41, 55); /* Couleur de la barre de défilement horizontale */
     border-radius: 3px; /* Arrondi des coins de la barre de défilement horizontale */
 }
+
+.item:hover {
+    background-color: transparent !important;
+}

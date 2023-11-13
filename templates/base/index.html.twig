@@ -25,15 +25,26 @@
 			</div>
 			<div class="text-center">
 				<p>Jouez avec vos amis grâce au lien d'invitation</p>
-				<form action="{{path('creation-partie')}}">
-					<button type="submit" style="outline: none;" class="btn btn-outline-info">Créer une partie</button>
-				</form>
+				{% if app.user %}
+					<form action="{{path('creation-partie')}}">
+						<button type="submit" style="outline: none;" class="btn btn-outline-info">Créer une partie</button>
+					</form>
+				{% else %}
+					<button type="button" style="outline: none;" class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#creerPartieModal">Créer une partie</button>
+				{% endif %}
 				<p>Ou</p>
 				<h4 class="text-white">Rejoindre une partie</h4>
-				<div class="d-inline-block rounded-3 p-1 bg-white">
-					<input class="me-1 inputJoinParty" type="text" id="joinPartyForm" placeholder="Code de la partie">
-					<button class="btnJoinParty" type="submit" id="joinPartyButton">Rejoindre</button>
-				</div>
+				{% if app.user %}
+					<div class="d-inline-block rounded-3 p-1 bg-white">
+						<input class="me-1 inputJoinParty" type="text" id="joinPartyForm" placeholder="Code de la partie">
+						<button class="btnJoinParty" type="submit" id="joinPartyButton">Rejoindre</button>
+					</div>
+				{% else %}
+					<div class="d-inline-block rounded-3 p-1 bg-white">
+						<input class="me-1 inputJoinParty" type="text" placeholder="Code de la partie">
+						<button type="button" style="outline: none;" class="btnJoinParty" data-bs-toggle="modal" data-bs-target="#creerPartieModal">Rejoindre</button>
+					</div>
+				{% endif %}
 			</div>
 		</div>
 	</div>
@@ -51,8 +62,8 @@
 						</div>
 						<div class="d-flex flex-column justify-content-between flex-grow-1">
 							<div class="text-white p-1 border border-white rounded-2 mt-0 p-2">
-								<span>Rang : {{ app.user.rang.libelle }}</span>
-								<img class="img-fluid mx-auto" src="images/rangs/master-icon-mini.png"/>
+								<span>Rang : <span style="color:{{ app.user.rang.couleur }};">{{ app.user.rang.libelle }}</span></span>
+								<img class="img-fluid mx-auto" src="images/rangs/{{ app.user.rang.miniLogo }}"/>
 							</div>
 							<div class="text-white p-1 border border-white rounded-2 mt-0 p-2">
 								<span>Monnaie : {{ app.user.monnaie }}
@@ -84,7 +95,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="text-center mt-2">
+					<div class="text-center mt-3">
 						<a href="{{ path('app_login') }}" class="align-self-center">
 							<button class="btn text-white" style="background-color: #6d28d9;">Connexion</button>
 						</a>
@@ -92,13 +103,15 @@
 				</div>
 			{% endif %}
 			<div class="p-3 mt-2 h-100" style="background-color:rgba(31, 41, 55); border-radius: 16px;">
-				<h3 class="text-center text-white mb-3">Top joueurs</h3>	
-				<div class="d-flex justify-content-between">
-					<p style="margin: 0;">1. Joueur 561</p>
-					<p style="margin: 0;">Rang : <img class="img-fluid" src="images/rangs/master-icon-mini.png"/></p>
-				</div>
-				<hr>
-				<div class="d-flex justify-content-between">
+				<h3 class="text-center text-white mb-3">Top joueurs</h3>
+				{% for joueur in joueurs %}
+					<div class="mx-3 d-flex justify-content-between">
+						<p style="margin: 0;">{{ joueur.username }}</p>
+						<p style="margin: 0;">Rang : <img class="img-fluid" src="images/rangs/{{ joueur.rang.miniLogo }}"/></p>
+					</div>
+					<hr>
+				{% endfor %}	
+				{# <div class="d-flex justify-content-between">
 					<p style="margin: 0;">2. Joueur 31</p>
 					<p style="margin: 0;">Rang : <img class="img-fluid" src="images/rangs/master-icon-mini.png"/></p>
 				</div>
@@ -116,13 +129,36 @@
 				<div class="d-flex justify-content-between">
 					<p style="margin: 0;">5. Joueur 698</p>
 					<p style="margin: 0;">Rang : <img class="img-fluid" src="images/rangs/master-icon-mini.png"/></p>
-				</div>
+				</div> #}
 				<div class="text-center mt-3">
 					<a type="button" style="outline: none;" class="btn btn-outline-info" href="{{path('classement')}}">Voir le classement</a>
 				</div>
 			</div>
 		</div>
 	</div>
+
+	<!-- Modal -->
+	<div class="modal fade" id="creerPartieModal" tabindex="-1" aria-labelledby="creerPartieModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title fs-5" id="creerPartieModalLabel">Information</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					Vous devez vous connecter pour créer ou rejoindre une partie.
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+					<a href="{{ path('app_login') }}" class="align-self-center">
+						<button class="btn text-white" style="background-color: #6d28d9;">Connexion</button>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
 
 <script>
 	document.addEventListener('DOMContentLoaded', function () {

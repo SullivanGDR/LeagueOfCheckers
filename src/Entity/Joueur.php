@@ -68,6 +68,9 @@ class Joueur implements UserInterface, PasswordAuthenticatedUserInterface
     #[Groups(['joueur:item'])]
     private ?int $monnaie = null;
 
+    #[ORM\Column]
+    private ?int $pointsRang = null;
+
     public function __construct()
     {
         $this->parties = new ArrayCollection();
@@ -272,6 +275,18 @@ class Joueur implements UserInterface, PasswordAuthenticatedUserInterface
     public function setMonnaie(int $monnaie): static
     {
         $this->monnaie = $monnaie;
+
+        return $this;
+    }
+
+    public function getPointsRang(): ?int
+    {
+        return $this->pointsRang;
+    }
+
+    public function setPointsRang(int $pointsRang): static
+    {
+        $this->pointsRang = $pointsRang;
 
         return $this;
     }

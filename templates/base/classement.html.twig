@@ -17,27 +17,16 @@
 				<div class="col-md-3">Rang</div>
 			</div>
 			<hr>
-			<div class="container-fluid d-flex text-center text-white">
-				<div class="col-md-3">Sullivan</div>
-				<div class="col-md-3">20</div>
-				<div class="col-md-3">16</div>
-				<div class="col-md-3">Diamant <img class="img-fluid" src="images/rangs/diamond-icon-mini.png"/></p></div>
-			</div>
-			<hr>
-			<div class="container-fluid d-flex text-center text-white">
-				<div class="col-md-3">Polo</div>
-				<div class="col-md-3">13</div>
-				<div class="col-md-3">7</div>
-				<div class="col-md-3">Maître <img class="img-fluid" src="images/rangs/master-icon-mini.png"/></p></div>
-			</div>
-			<hr>
-			<div class="container-fluid d-flex text-center text-white">
-				<div class="col-md-3">Thoma</div>
-				<div class="col-md-3">16</div>
-				<div class="col-md-3">18</div>
-				<div class="col-md-3">Bronze <img class="img-fluid" src="images/rangs/bronze-icon-mini.png"/></p></div>
-			</div>
-
+			{% for joueur in joueurs %}
+				<div class="container-fluid d-flex text-center text-white">
+					<div class="col-md-3">{{ joueur.username }}</div>
+					<div class="col-md-3">{{ joueur.nbVictoire }}</div>
+					<div class="col-md-3">{{ joueur.nbDefaite }}</div>
+					<div class="col-md-3"><span style="color:{{ joueur.rang.couleur }};">{{ joueur.rang.libelle }}</span>
+							<img class="img-fluid mx-auto" src="images/rangs/{{ joueur.rang.miniLogo }}"/></div>
+				</div>
+				<hr>
+			{% endfor %}
 		</div>
 	</div>
 </div>{% endblock %}
