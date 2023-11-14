@@ -23,7 +23,7 @@ class Joueur implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['joueur:item'])]
+    #[Groups(['joueur:item','partie:item','deplacement:list','mouvement:item'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]

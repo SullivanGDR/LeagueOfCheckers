@@ -7,14 +7,17 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\GetCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
 
 #[ApiResource(operations:[
     new Post(normalizationContext:['groups'=>'deplacement:item']),
     new GetCollection(normalizationContext:['groups'=>'deplacement:list'])
 ])]
+#[ApiFilter(SearchFilter::class, properties: ['parties'=>"exact"])]
 #[ORM\Entity(repositoryClass: DeplacementRepository::class)]
 class Deplacement
 {
@@ -41,7 +44,7 @@ class Deplacement
 
     #[ORM\ManyToOne(inversedBy: 'deplacements')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['deplacement:list,deplacement:item'])]
+    #[Groups(['deplacement:list','deplacement:item'])]
     private ?Mouvement $mouvement = null;
 
     #[ORM\ManyToMany(targetEntity: Partie::class, mappedBy: 'deplacement')]

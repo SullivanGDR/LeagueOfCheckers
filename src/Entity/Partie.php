@@ -58,10 +58,12 @@ class Partie
     private ?string $codePartie = null;
 
     #[ORM\ManyToOne(inversedBy: 'parties')]
+    #[Groups(['partie:item'])]
     private ?Joueur $joueurB = null;
 
     #[ORM\ManyToOne(inversedBy: 'parties')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['partie:item'])]
     private ?Joueur $joueurN = null;
 
     #[ORM\ManyToOne(inversedBy: 'parties')]

@@ -1,14 +1,41 @@
 import { createDeplacement } from "./api/deplacement_api.js";
-import { getMouvement,createMouvement,patchArriveMouvement } from "./api/mouvement_api.js";
-import { patchEtatPlateau,getNbCoupJN,getNbCoupJB,patchAddNbCoupJN,patchAddNbCoupJB,getNbTour,patchAddNbTour,getNbPionJB,getNbPionJN,patchDellNbPionJB,patchDellNbPionJN,getEtatPlateau } from "./api/partie_api.js";
+import { getMouvement,createMouvement,patchArriveMouvement,getMouvementId } from "./api/mouvement_api.js";
+import { patchEtatPlateau,getNbCoupJN,getNbCoupJB,patchAddNbCoupJN,patchAddNbCoupJB,getNbTour,patchAddNbTour,getNbPionJB,getNbPionJN,patchDellNbPionJB,patchDellNbPionJN,getEtatPlateau,getJoueurN,getJoueurB } from "./api/partie_api.js";
 export {createDamier}
-// patchEtatPlateau(1,document.getElementById('damier').innerHTML)
-// getEtatPlateau(1)
-// document.getElementById('damier').innerHTML=getEtatPlateau(1)
 
-//console.log(document.getElementById('damier'))
 var pionS=null;
 var caseMove=null;
+var partie=document.getElementById('idPartie');
+var tour= await getNbTour(partie.dataset.idpartie)
+init()
+canPlay()
+console.log(tour)
+setInterval(fullReset, 10000);
+
+
+async function init() {
+    if (await getEtatPlateau(partie.dataset.idpartie) == null) {
+        createDamier();
+        initPion();
+        recursiv();
+    }else{
+        tour = await getNbTour(partie.dataset.idpartie)
+        document.getElementById('damier').innerHTML=await getEtatPlateau(partie.dataset.idpartie);
+        initPion();
+        resetMouvement();
+    }
+
+}
+
+async function recursiv(){
+    if (await getJoueurB(partie.dataset.idpartie)==null) {
+        recursiv();
+    }else{
+        await patchAddNbTour(partie.dataset.idpartie);
+        tour = await getNbTour(partie.dataset.idpartie)
+    }
+}
+
 function createDamier() {
     var damier = document.getElementById('damier');
     for (var i = 0; i <= 9; i++) {
@@ -23,14 +50,12 @@ function createDamier() {
                     if (i <= 3) {
                         let pion = document.createElement("span");
                         pion.classList.add("pion-noir");
-                        pion.addEventListener("click", select);
-                        pion.addEventListener("click", selectCase);
+                        
                         newDiv.appendChild(pion);
                     } else if (i >= 6) {
                         let pion = document.createElement("span");
                         pion.classList.add("pion-blanc");
-                        pion.addEventListener("click", select);
-                        pion.addEventListener("click", selectCase);
+                        
                         newDiv.appendChild(pion);
                     }
                     damier.appendChild(newDiv);
@@ -59,20 +84,89 @@ function createDamier() {
                     if (i <= 3) {
                         let pion = document.createElement("span");
                         pion.classList.add("pion-noir");
-                        pion.addEventListener("click", select);
-                        pion.addEventListener("click", selectCase);
+                        
                         newDiv.appendChild(pion);
                     } else if (i >= 6) {
                         let pion = document.createElement("span");
                         pion.classList.add("pion-blanc");
-                        pion.addEventListener("click", select);
-                        pion.addEventListener("click", selectCase);
+                        
                         newDiv.appendChild(pion);
                     }
                     damier.appendChild(newDiv);
                 }
             }
         }
+    }
+    initPion();
+}
+
+async function fullReset() {
+    if (tour == 0) {
+        document.getElementById('damier').style.pointerEvents = 'none';
+    }else{
+        tour=await getNbTour(parseInt(partie.dataset.idpartie))
+        canPlay()
+        resetMouvement()
+        document.getElementById('damier').innerHTML=await getEtatPlateau(partie.dataset.idpartie)
+        
+        initPion()
+    }
+}
+
+function resetBorderPion() {
+    let damier = document.getElementById('damier')
+    for (let pion of damier.children) {
+        
+        
+    }
+}
+
+async function resetMouvement() {
+    let mouvements = await getMouvement(partie.dataset.idpartie);
+    let divMouv = document.getElementById("mouvement");
+    divMouv.innerHTML="";
+    for (let mouv of mouvements) {
+        let p = document.createElement("p");
+        p.classList.add("text-white");
+        p.classList.add("text-center");
+        p.classList.add("p-2");
+        p.style.backgroundColor = "rgba(31, 41, 55)";
+        p.style.borderRadius = "16px";
+        const emplacementX = encodeURIComponent(mouv.emplacementX);
+        const emplacementY = encodeURIComponent(mouv.emplacementY);
+        const arriveX = encodeURIComponent(mouv.arriveX);
+        const arriveY = encodeURIComponent(mouv.arriveY);
+        if (mouv.joueur.id==await getJoueurN(partie.dataset.idpartie)) {
+            p.innerHTML = `Déplacement du joueur Noir : [${emplacementX},${emplacementY}] <i class="bi bi-arrow-right"></i> [${arriveX},${arriveY}]`;
+        }else if (mouv.joueur.id==await getJoueurB(partie.dataset.idpartie)) {
+            p.innerHTML = `Déplacement du joueur Blanc : [${emplacementX},${emplacementY}] <i class="bi bi-arrow-right"></i> [${arriveX},${arriveY}]`;
+        }
+        divMouv.appendChild(p);
+    }
+}
+
+
+async function initPion() {
+    if (partie.dataset.idjoueur==await getJoueurN(partie.dataset.idpartie)) {
+        let pionN=document.getElementsByClassName('pion-noir');
+        for (let pion of pionN) {
+            pion.addEventListener("click", select);
+            pion.addEventListener("click", selectCase); 
+        }
+    }else if (partie.dataset.idjoueur==await getJoueurB(partie.dataset.idpartie)) {
+        let pionB=document.getElementsByClassName('pion-blanc');
+        for (let pion of pionB) {
+            pion.addEventListener("click", select);
+            pion.addEventListener("click", selectCase); 
+        }
+    }
+}
+
+async function canPlay() {
+    if (partie.dataset.idjoueur==await getJoueurN(partie.dataset.idpartie) && tour%2==0) {
+        document.getElementById('damier').style.pointerEvents = 'none';
+    }else if (partie.dataset.idjoueur==await getJoueurB(partie.dataset.idpartie) && tour%2!=0) {
+        document.getElementById('damier').style.pointerEvents = 'none';
     }
 }
 
@@ -96,16 +190,21 @@ async function moove() {
         let caseChoisis = this
         //console.log(caseChoisis)
         if (caseChoisis.style.backgroundColor == "blue") {
-            let departX=pionS.parentElement.dataset.x
-            let departY=pionS.parentElement.dataset.y
-            let idMouv=await createMouvement(parseInt(departX),parseInt(departY),3,"simple")
-            createDeplacement(parseInt(idMouv),1,parseInt(departX),parseInt(departY),parseInt(caseChoisis.dataset.x),parseInt(caseChoisis.dataset.y))
-            patchArriveMouvement(parseInt(idMouv),parseInt(caseChoisis.dataset.x),parseInt(caseChoisis.dataset.y))
             pionS.parentElement.removeChild(pionS);
             caseChoisis.appendChild(pionS);
             resetCase();
+            await patchAddNbTour(parseInt(partie.dataset.idpartie))
+            tour=await getNbTour(parseInt(partie.dataset.idpartie))
+            canPlay();
+            let departX=pionS.parentElement.dataset.x
+            let departY=pionS.parentElement.dataset.y
+            let idMouv=await createMouvement(parseInt(departX),parseInt(departY),parseInt(partie.dataset.idjoueur),"simple")
+            createDeplacement(parseInt(idMouv),parseInt(partie.dataset.idpartie),parseInt(departX),parseInt(departY),parseInt(caseChoisis.dataset.x),parseInt(caseChoisis.dataset.y))
+            patchArriveMouvement(parseInt(idMouv),parseInt(caseChoisis.dataset.x),parseInt(caseChoisis.dataset.y))
+            patchEtatPlateau(parseInt(partie.dataset.idpartie),document.getElementById('damier').innerHTML)
+            console.log(tour)
             resetSelectPion();
-            patchEtatPlateau(1,document.getElementById('damier').innerHTML)
+            console.log(document.getElementById('damier'))
         }
     }
 }
@@ -114,20 +213,21 @@ async function moove2() {
     if (pionS !== null) {
         let caseChoisis = caseMove
         //console.log(caseChoisis)
-        console.log("manger1")
         if (caseChoisis.style.backgroundColor == "blue") {
-            console.log("manger")
-            console.log(pionS)
-            let departX=pionS.parentElement.dataset.x
-            let departY=pionS.parentElement.dataset.y
-            let idMouv=await createMouvement(parseInt(departX),parseInt(departY),3,"saut")
-            createDeplacement(parseInt(idMouv),1,parseInt(departX),parseInt(departY),parseInt(caseChoisis.dataset.x),parseInt(caseChoisis.dataset.y))
-            patchArriveMouvement(parseInt(idMouv),parseInt(caseChoisis.dataset.x),parseInt(caseChoisis.dataset.y))
             pionS.parentElement.removeChild(pionS);
             caseChoisis.appendChild(pionS);
             resetCase();
+            await patchAddNbTour(parseInt(partie.dataset.idpartie))
+            tour=await getNbTour(parseInt(partie.dataset.idpartie))
+            canPlay();
+            let departX=pionS.parentElement.dataset.x
+            let departY=pionS.parentElement.dataset.y
+            let idMouv=await createMouvement(parseInt(departX),parseInt(departY),parseInt(partie.dataset.idjoueur),"saut")
+            createDeplacement(parseInt(idMouv),parseInt(partie.dataset.idpartie),parseInt(departX),parseInt(departY),parseInt(caseChoisis.dataset.x),parseInt(caseChoisis.dataset.y))
+            patchArriveMouvement(parseInt(idMouv),parseInt(caseChoisis.dataset.x),parseInt(caseChoisis.dataset.y))
+            patchEtatPlateau(parseInt(partie.dataset.idpartie),document.getElementById('damier').innerHTML)
+            console.log(tour)
             resetSelectPion();
-            patchEtatPlateau(1,document.getElementById('damier').innerHTML)
         }
     }
 }
@@ -214,25 +314,3 @@ function selectCase() {
         console.log("=========");
     }
 }
-
-function mme() {
-    var blanc =document.getElementsByClassName("pion-blanc")
-    for (let elem of blanc) {
-        elem.style.backgroundColor="rgb(255,105,180)"
-        
-    }
-}
-
-document.getElementById("switch").addEventListener("click",mme,false);
-
-// function mange(x, y) {
-//     moove();
-//     let caseClear = document.querySelector(`[data-x="${x}"][data-y="${y}"]`);
-//     if (caseClear) {
-//         console.log(caseClear);
-//         let pion = caseClear.firstChild;
-//         if (pion) {
-//             caseClear.removeChild(pion);
-//         }
-//     }
-// }

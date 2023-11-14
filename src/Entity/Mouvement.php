@@ -14,7 +14,7 @@ use ApiPlatform\Metadata\Patch;
 
 #[ApiResource(operations:[
     new Post(normalizationContext:['groups'=>'mouvement:item']),
-    new Get(),
+    new Get(normalizationContext:['groups'=>'mouvement:item']),
     new Patch(normalizationContext:['groups'=>'mouvement:item'])
 ])]
 #[ORM\Entity(repositoryClass: MouvementRepository::class)]
@@ -51,6 +51,7 @@ class Mouvement
 
     #[ORM\ManyToOne(inversedBy: 'mouvements')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['deplacement:list','mouvement:item'])]
     private ?Joueur $joueur = null;
 
     public function __construct()

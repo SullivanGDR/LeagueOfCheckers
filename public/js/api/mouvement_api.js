@@ -10,15 +10,29 @@ async function getMouvement(idPartie) {
     const data = await response.json();
     const deplacements = data['hydra:member']; // Accédez à la propriété hydra:member
     const mouvements = deplacements.map(deplacement => deplacement.mouvement);//recupere tout les mouvement efectuer dans la partie (depart arrivé)
-    //console.log(mouvements[0])
-    //console.log(mouvements[0].arriveX)
-    //pour faire l'affichage faire un foreach
+    console.log(mouvements)
     return mouvements;
   } catch (error) {
     console.error('Erreur lors de la réception : ', error);
     throw error;
   }
 }
+
+async function getMouvementId(idMouvement) {
+  try {
+      const reponse = await fetch(`${API_URL_Mouv}/${idMouvement}`);
+      if (!reponse.ok) {
+          throw new Error('Erreur : '+reponse.statusText);
+      }
+      const data = await reponse.json();
+      console.log(data)
+      return data;
+  } catch (error) {
+      console.error('Erreur lors de la reception : ',error);
+      throw error;
+  }
+}
+
 async function createMouvement(emplacementX,emplacementY,idJoueur,typeMouv){
   try{
       const data = {
@@ -89,4 +103,4 @@ async function patchArriveMouvement(idMouvement,arriveX,arriveY){
 
 
 
-export { getMouvement,createMouvement,patchArriveMouvement }
+export { getMouvement,createMouvement,patchArriveMouvement,getMouvementId }

@@ -24,7 +24,7 @@ async function patchEtatPlateau(idPartie,plateau){
             //on va nous afficher l'erreur qu'on nous a retourner
         }
         const r = await response.json();
-        console.log(r);
+        //console.log(r);
         return r;
     }
     catch(erreur){
@@ -41,7 +41,7 @@ async function getEtatPlateau(id) {
             throw new Error('Erreur : '+reponse.statusText);
         }
         const data = await reponse.json();
-        console.log(JSON.parse(data.etatPlateau))
+        //console.log(JSON.parse(data.etatPlateau))
         return JSON.parse(data.etatPlateau);
     } catch (error) {
         console.error('Erreur lors de la reception : ',error);
@@ -279,7 +279,37 @@ async function patchDellNbPionJN(idPartie) {
     }
 }
 
-export {patchEtatPlateau,getNbCoupJN,getNbCoupJB,patchAddNbCoupJN,patchAddNbCoupJB,getNbTour,patchAddNbTour,getNbPionJB,getNbPionJN,patchDellNbPionJB,patchDellNbPionJN,getEtatPlateau}
+async function getJoueurN(id) {
+    try {
+        const reponse = await fetch(`${API_URL}/${id}`);
+        if (!reponse.ok) {
+            throw new Error('Erreur : '+reponse.statusText);
+        }
+        const data = await reponse.json();
+        //console.log(data.joueurN.id)
+        return data.joueurN.id;
+    } catch (error) {
+        console.error('Erreur lors de la reception : ',error);
+        throw error;
+    }
+}
+
+async function getJoueurB(id) {
+    try {
+        const reponse = await fetch(`${API_URL}/${id}`);
+        if (!reponse.ok) {
+            throw new Error('Erreur : '+reponse.statusText);
+        }
+        const data = await reponse.json();
+        //console.log(data.joueurB.id)
+        return data.joueurB.id;
+    } catch (error) {
+        console.error('Erreur lors de la reception : ',error);
+        throw error;
+    }
+}
+
+export {patchEtatPlateau,getNbCoupJN,getNbCoupJB,patchAddNbCoupJN,patchAddNbCoupJB,getNbTour,patchAddNbTour,getNbPionJB,getNbPionJN,patchDellNbPionJB,patchDellNbPionJN,getEtatPlateau,getJoueurN,getJoueurB}
 
 
 

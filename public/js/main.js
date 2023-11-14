@@ -3,7 +3,6 @@ import { getMouvement,createMouvement,patchArriveMouvement } from "./api/mouveme
 import { patchEtatPlateau,getNbCoupJN,getNbCoupJB,patchAddNbCoupJN,patchAddNbCoupJB,getNbTour,patchAddNbTour,getNbPionJB,getNbPionJN,patchDellNbPionJB,patchDellNbPionJN,getEtatPlateau } from "./api/partie_api.js";
 import { createDamier } from "./damier.js";
 
-createDamier();
 
 // // Booléen pour contrôler le chronomètre
 // let isRunning = false;
