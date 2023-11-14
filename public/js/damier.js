@@ -7,20 +7,23 @@ var pionS=null;
 var caseMove=null;
 var partie=document.getElementById('idPartie');
 var tour= await getNbTour(partie.dataset.idpartie)
+var divNbTour=document.getElementById("nbTour")
 init()
 canPlay()
 console.log(tour)
 setInterval(fullReset, 10000);
-
+console.log(await getEtatPlateau(partie.dataset.idpartie))
 
 async function init() {
     if (await getEtatPlateau(partie.dataset.idpartie) == null) {
         createDamier();
         initPion();
         recursiv();
+        divNbTour.innerText=tour;
     }else{
         tour = await getNbTour(partie.dataset.idpartie)
         document.getElementById('damier').innerHTML=await getEtatPlateau(partie.dataset.idpartie);
+        divNbTour.innerText=tour;
         initPion();
         resetMouvement();
     }
@@ -31,7 +34,9 @@ async function recursiv(){
     if (await getJoueurB(partie.dataset.idpartie)==null) {
         recursiv();
     }else{
-        await patchAddNbTour(partie.dataset.idpartie);
+        if (await getNbTour(partie.dataset.idpartie)==0) {
+            await patchAddNbTour(partie.dataset.idpartie);
+        }
         tour = await getNbTour(partie.dataset.idpartie)
     }
 }
@@ -105,10 +110,10 @@ async function fullReset() {
         document.getElementById('damier').style.pointerEvents = 'none';
     }else{
         tour=await getNbTour(parseInt(partie.dataset.idpartie))
-        canPlay()
+        divNbTour.innerHTML=tour
+        await canPlay()
         resetMouvement()
         document.getElementById('damier').innerHTML=await getEtatPlateau(partie.dataset.idpartie)
-        
         initPion()
     }
 }
@@ -116,8 +121,7 @@ async function fullReset() {
 function resetBorderPion() {
     let damier = document.getElementById('damier')
     for (let pion of damier.children) {
-        
-        
+        pion.classList.remove("surligne")
     }
 }
 
@@ -167,6 +171,8 @@ async function canPlay() {
         document.getElementById('damier').style.pointerEvents = 'none';
     }else if (partie.dataset.idjoueur==await getJoueurB(partie.dataset.idpartie) && tour%2!=0) {
         document.getElementById('damier').style.pointerEvents = 'none';
+    }else{
+        document.getElementById('damier').style.pointerEvents = 'auto';
     }
 }
 
@@ -190,14 +196,15 @@ async function moove() {
         let caseChoisis = this
         //console.log(caseChoisis)
         if (caseChoisis.style.backgroundColor == "blue") {
+            let departX=pionS.parentElement.dataset.x
+            let departY=pionS.parentElement.dataset.y
             pionS.parentElement.removeChild(pionS);
             caseChoisis.appendChild(pionS);
             resetCase();
             await patchAddNbTour(parseInt(partie.dataset.idpartie))
             tour=await getNbTour(parseInt(partie.dataset.idpartie))
             canPlay();
-            let departX=pionS.parentElement.dataset.x
-            let departY=pionS.parentElement.dataset.y
+            resetBorderPion()
             let idMouv=await createMouvement(parseInt(departX),parseInt(departY),parseInt(partie.dataset.idjoueur),"simple")
             createDeplacement(parseInt(idMouv),parseInt(partie.dataset.idpartie),parseInt(departX),parseInt(departY),parseInt(caseChoisis.dataset.x),parseInt(caseChoisis.dataset.y))
             patchArriveMouvement(parseInt(idMouv),parseInt(caseChoisis.dataset.x),parseInt(caseChoisis.dataset.y))
@@ -205,6 +212,7 @@ async function moove() {
             console.log(tour)
             resetSelectPion();
             console.log(document.getElementById('damier'))
+            divNbTour.innerText=tour;
         }
     }
 }
@@ -228,6 +236,7 @@ async function moove2() {
             patchEtatPlateau(parseInt(partie.dataset.idpartie),document.getElementById('damier').innerHTML)
             console.log(tour)
             resetSelectPion();
+            divNbTour.innerText=tour;
         }
     }
 }

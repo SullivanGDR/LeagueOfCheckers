@@ -41,8 +41,12 @@ async function getEtatPlateau(id) {
             throw new Error('Erreur : '+reponse.statusText);
         }
         const data = await reponse.json();
-        //console.log(JSON.parse(data.etatPlateau))
-        return JSON.parse(data.etatPlateau);
+        if (data.etatPlateau == null) {
+            console.log("ok")
+            return null
+        }else{
+            return JSON.parse(data.etatPlateau);
+        }
     } catch (error) {
         console.error('Erreur lors de la reception : ',error);
         throw error;
