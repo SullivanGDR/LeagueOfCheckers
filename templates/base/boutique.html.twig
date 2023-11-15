@@ -6,6 +6,7 @@
 
 {% block body %}
 
+{% if app.user %}
 <section class="container-fluid d-flex justify-content-center p-0 m-0">
 	<section class="p-0 mt-3 col-10">
 		<div class="container-fluid px-0 px-lg-5 ">
@@ -84,4 +85,7 @@
 			</div>
 		</div>
 	</div>
+{% else %}
+<p class="text-center text-white">Vous devez vous connecter pour accéder à la boutique.</p>
+{% endif %}
 {% endblock %}

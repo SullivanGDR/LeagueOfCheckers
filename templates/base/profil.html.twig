@@ -6,6 +6,8 @@
 
 {% block body %}
 
+<div class="background-image"></div>
+
 	{# Container de la page contenant le classement des joueurs #}
 	<div class="container d-flex justify-content-center mt-5 mb-5">
 		<div class="col-md-8 p-5 mt-2 h-100" style="background-color:rgba(31, 41, 55); border-radius: 16px;">
@@ -14,7 +16,7 @@
 				<div class="d-flex justify-content-between">
 					<p class="text-white">{{ joueur.username }}</p>
 					<p><span style="color:{{ joueur.rang.couleur }};">{{ joueur.rang.libelle }}</span>
-							<img class="img-fluid mx-auto" src="images/rangs/{{ joueur.rang.miniLogo }}"/> ( {{ joueur.pointsRang }} )</p>
+							<img class="img-fluid mx-auto" src="{{ asset('images/rangs/' ~ joueur.rang.miniLogo) }}"/> ( {{ joueur.pointsRang }} )</p>
 				</div>
 				<p>Parties jouées : {{ joueur.nbTotalePartie }}</p>
 				<p>Parties gagnées : {{ joueur.nbVictoire }}</p>

@@ -6,20 +6,21 @@
 
 {% block body %}
 
+<div class="background-image"></div>
 {# Container de la page contenant la partie de gauche et de droite #}
 
 <div class="container d-flex mt-5 mb-5">
 	{# Colonne de gauche #}
 	<div class="col-md-8 me-1 h-100">
 		{# Première div de gauche (présentation) #}
-		<div class="p-3" style="background-color:rgba(31, 41, 55); border-radius: 16px;">
+		<div class="glassmorphism-container">
 			<p>Bonjour à tous,</p>
 			<p>Nous sommes Sullivan, Thoma et Paul, trois étudiants du BTS SIO (Services Informatiques aux Organisations) au sein du lycée Guy Mollet à Arras.</p>
 			<p>Nous sommes ravis de vous présenter notre projet actuel, qui incarne notre engagement envers l'informatique et notre créativité. Pour l'occasion du Salon de l'Étudiant 2023, nous avons développé un jeu de dames en ligne. Ce jeu classique est désormais accessible à tous, à partir de n'importe quel appareil connecté à Internet. Notre objectif était de créer une expérience ludique et conviviale tout en démontrant nos compétences en développement web et en conception de jeux.</p>
 			<p>Nous vous invitons à venir découvrir notre projet au Salon de l'Étudiant 2023. Notre équipe sera présente pour vous montrer en direct notre jeu de dames en ligne, discuter de nos réalisations et de nos ambitions futures, et répondre à toutes vos questions. Nous sommes impatients de partager notre passion pour la technologie et l'informatique avec vous.</p>
 		</div>
 		{# Deuxième div de gauche (rejoindre ou inviter) #}
-		<div class="p-3 mt-2" style="background-color:rgba(31, 41, 55); border-radius: 16px;">
+		<div class="glassmorphism-container mt-2">
 			<div class="text-center">
 				<h3 class="text-white"><i class="bi bi-people"></i> Party Mode</h3>
 			</div>
@@ -52,7 +53,7 @@
 	<div class="col-md-4 ms-1 flex-grow-1">
 		<div class="d-flex flex-column h-100">
 			{% if app.user %}
-				<div class="p-3" style="background-color: rgba(31, 41, 55); border-radius: 16px;">
+				<div class="glassmorphism-container">
 					<div class="text-center">
 						<p class="m-0 mb-2 text-white">{{ app.user.username }}</p>
 					</div>
@@ -78,7 +79,7 @@
 					</div>
 				</div>
 			{% else %}
-				<div class="p-3" style="background-color: rgba(31, 41, 55); border-radius: 16px;">
+				<div class="glassmorphism-container">
 					<div class="text-center">
 						<p class="m-0 mb-2 text-white">Vous devez vous connecter.</p>
 					</div>
@@ -102,7 +103,7 @@
 					</div>
 				</div>
 			{% endif %}
-			<div class="p-3 mt-2 h-100" style="background-color:rgba(31, 41, 55); border-radius: 16px;">
+			<div class="glassmorphism-container mt-2 h-100">
 				<h3 class="text-center text-white mb-3">Top joueurs</h3>
 				{% for joueur in joueurs %}
 					<div class="mx-3 d-flex justify-content-between">

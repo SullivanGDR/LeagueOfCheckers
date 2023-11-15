@@ -9,6 +9,9 @@ export {createDamier}
 //console.log(document.getElementById('damier'))
 var pionS=null;
 var caseMove=null;
+
+
+
 function createDamier() {
     var damier = document.getElementById('damier');
     for (var i = 0; i <= 9; i++) {

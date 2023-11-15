@@ -5,6 +5,7 @@
 {% endblock %}
 
 {% block body %}
+<div class="background-image"></div>
 
 	{# Container de la page contenant le classement des joueurs #}
 	<div class="container mt-5 mb-5">
@@ -19,7 +20,7 @@
 			<hr>
 			{% for joueur in joueurs %}
 				<div class="container-fluid d-flex text-center text-white">
-					<div class="col-md-3">{{ joueur.username }}</div>
+					<div class="col-md-3"><a href="{{ path('profil', {'id': joueur.id}) }}" class="text-white text-capitalize" target="_blank">{{ joueur.username }}</a></div>
 					<div class="col-md-3">{{ joueur.nbVictoire }}</div>
 					<div class="col-md-3">{{ joueur.nbDefaite }}</div>
 					<div class="col-md-3"><span style="color:{{ joueur.rang.couleur }};">{{ joueur.rang.libelle }}</span>
