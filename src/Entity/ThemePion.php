@@ -27,13 +27,13 @@ class ThemePion
     #[ORM\OneToMany(mappedBy: 'themePion', targetEntity: Joueur::class)]
     private Collection $joueurs;
 
-    #[ORM\ManyToMany(targetEntity: Joueur::class, inversedBy: 'themePions')]
-    private Collection $joueur;
+    #[ORM\ManyToMany(targetEntity: Joueur::class, mappedBy: 'casier')]
+    private Collection $user;
 
     public function __construct()
     {
         $this->joueurs = new ArrayCollection();
-        $this->joueur = new ArrayCollection();
+        $this->user = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -110,8 +110,27 @@ class ThemePion
     /**
      * @return Collection<int, Joueur>
      */
-    public function getJoueur(): Collection
+    public function getUser(): Collection
     {
-        return $this->joueur;
+        return $this->user;
+    }
+
+    public function addUser(Joueur $user): static
+    {
+        if (!$this->user->contains($user)) {
+            $this->user->add($user);
+            $user->addCasier($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(Joueur $user): static
+    {
+        if ($this->user->removeElement($user)) {
+            $user->removeCasier($this);
+        }
+
+        return $this;
     }
 }

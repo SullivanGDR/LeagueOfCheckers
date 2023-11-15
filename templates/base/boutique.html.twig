@@ -6,30 +6,66 @@
 
 {% block body %}
 
-	{# Container de la page boutique #}
-	<div class="container d-flex justify-content-center mt-5 mb-5">
-		<div class="p-5 mt-2 h-100" style="background-color:rgba(31, 41, 55); border-radius: 16px;">
-			<h4 class="text-white mb-3">Boutique de {{ app.user.username }}</h4>
-			<div class="d-flex">
+<section class="container-fluid d-flex justify-content-center p-0 m-0">
+	<section class="p-0 mt-3 col-10">
+		<div class="container-fluid px-0 px-lg-5 ">
+			<h3 class="text-white text-center">Boutique de {{ app.user.username }}</h3>
+			<p class="text-center text-white">Monnaie : {{ app.user.monnaie }} <i class="bi bi-coin text-warning"></i></p>
+			<div class="row gx-4 gx-lg-5 ">
 				{% for tpion in themePion %}
-					{% if tpion == app.user.themePion %}
-						<a href="#" class="col-md-1 d-flex flex-column text-center nav-link">
-							<div class="rounded-3 position-relative" style="height: 120px; width: 140px; background-color: {{ tpion.argb }};">
-								<div class="position-absolute bottom-0 end-0 px-1 bg-success text-white rounded-3">Débloquée</div>
+					{% if tpion in app.user.getCasier() %}
+						<div class="px-1 px-lg-2 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 mb-5">
+							<div class="nav-link d-flex justify-content-center">
+								<div class="card border-0 bg-transparent">
+									<div class="card-couleur" style="background-color: {{ tpion.argb }};"></div>
+									<div class="card-body d-flex justify-content-between px-1">
+										<p class="card-text">{{ tpion.couleur }}</p>
+										<p>Débloquée</p>
+									</div>
+								</div>
 							</div>
-							<p>{{ tpion.couleur }}</p>
-						</a>
+						</div>
 					{% else %}
-						<a href="#" class="col-md-1 d-flex flex-column text-center nav-link">
-							<div class="rounded-3 position-relative" style="height: 120px; width: 140px; background-color: {{ tpion.argb }};">
-								<div class="position-absolute bottom-0 end-0 px-1 bg-success text-white rounded-3">Coût : 500</div>
+						{% if tpion.couleur == "Bronze" or tpion.couleur == "Argent" or tpion.couleur == "Or" or tpion.couleur == "Émeraude" or tpion.couleur == "Diamant" or tpion.couleur == "Maître" %}
+							<div class="d-none">
+								<a href="#" class="nav-link d-flex justify-content-center">
+									<div class="card border-0 bg-transparent">
+										<div class="card-couleur" style="background-color: {{ tpion.argb }}; "></div>
+										<div class="card-body d-flex justify-content-between px-1">
+											<p class="card-text">{{ tpion.couleur }}</p>
+											<p>Coût : 500
+												<i class="bi bi-coin text-warning"></i>
+											</p>
+										</div>
+									</div>
+								</a>
 							</div>
-							<p>{{ tpion.couleur }}</p>
-						</a>
+						{% else %}
+							<div class="px-1 px-lg-2 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 mb-5">
+								<div class="nav-link d-flex justify-content-center">
+									<div class="card border-0 bg-transparent">
+										<div class="card-couleur" style="background-color: {{ tpion.argb }};"></div>
+										<div class="card-body d-flex justify-content-between px-3 align-items-center">
+											<p class="card-text m-0">{{ tpion.couleur }}</p>
+											{% if app.user.monnaie < 500 %}
+												<a href="#" class="nav-link p-2 bg-success rounded-2 d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#noSousModal">Coût : 500
+													<i class="bi bi-coin text-warning"></i>
+												</a>
+											{% else %}
+												<a href="{{path('achat-pion', {"id": tpion.id})}}" class="nav-link p-2 bg-success rounded-2 d-flex align-items-center">Coût : 500
+													<i class="bi bi-coin text-warning"></i>
+												</a>
+											{% endif %}
+										</div>
+									</div>
+								</div>
+							</div>
+						{% endif %}
 					{% endif %}
 				{% endfor %}
 			</div>
 		</div>
+<<<<<<< HEAD
 	</div>
 </div>
 
@@ -51,3 +87,25 @@
 	</a>
 {% endif %}
 {% endfor %} #}
+=======
+	</section>
+</section>
+	<!-- Modal -->
+	<div class="modal fade" id="noSousModal" tabindex="-1" aria-labelledby="noSousModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title fs-5" id="noSousModalLabel">Information</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					Pas assez de monnaie.
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}
+>>>>>>> partie2

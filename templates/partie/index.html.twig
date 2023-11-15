@@ -21,7 +21,7 @@
     <div class="col-md-3 d-flex flex-column justify-content-between ms-2">
         <div class="p-3 mb-2" style="background-color: rgba(31, 41, 55); border-radius: 16px;">
             <div class="text-center">
-                <p class="m-0 mb-2 text-white text-capitalize">{{ partie.joueurN.username }}</p>
+                <a href="{{ path('profil', {'id': partie.joueurN.id}) }}" class="m-0 mb-2 text-white text-capitalize" target="_blank">{{ partie.joueurN.username }}</a>
             </div>
             <hr>
             <div class="d-flex">
@@ -81,15 +81,11 @@
                 <p>Nombre de partie(s) : -</p>
                 <p>Nombre de victoire(s) / défaite(s) : -/-</p>
             </div>
-            <hr>
-            {% if app.user == partie.joueurB %}
-                <p class="text-center text-white">Vous êtes le joueur Noir</p>
-            {% endif %}
         </div>
         {% else %}
         <div class="p-3 mt-2" style="background-color: rgba(31, 41, 55); border-radius: 16px;">
             <div class="text-center">
-                <a href="{{ path('profil', {'id': partie.joueurB.id}) }}" class="m-0 mb-2 text-white text-capitalize">{{ partie.joueurB.username }}</a>
+                <a href="{{ path('profil', {'id': partie.joueurB.id}) }}" class="m-0 mb-2 text-white text-capitalize" target="_blank">{{ partie.joueurB.username }}</a>
             </div>
             <hr>
             <div class="d-flex">
@@ -112,7 +108,7 @@
             </div>
             <hr>
             {% if app.user == partie.joueurB %}
-                <p class="text-center text-white">Vous êtes le joueur Noir</p>
+                <p class="text-center text-white">Vous êtes le joueur Blanc</p>
             {% endif %}
         </div>
         {% endif %}

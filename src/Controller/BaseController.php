@@ -64,9 +64,12 @@ class BaseController extends AbstractController
         ->getQuery()
         ->getResult();
 
+        $themepion = $entityManagerInterface->getRepository(ThemePion::class)->findAll();
+
         return $this->render('base/profil.html.twig', [
             "joueur" => $joueur,
-            "parties" => $parties
+            "parties" => $parties,
+            "themePion" => $themepion
         ]);
     }
     #[Route('/boutique', name: 'boutique')]
@@ -75,6 +78,46 @@ class BaseController extends AbstractController
         $themepion = $entityManagerInterface->getRepository(ThemePion::class)->findAll();
         return $this->render('base/boutique.html.twig', [
             "themePion" => $themepion
+        ]);
+    }
+    #[Route('/achat-pion/{id}', name: 'achat-pion')]
+    public function achatPion(Request $request , EntityManagerInterface $entityManagerInterface, SluggerInterface $slugger): Response
+    {    
+        $id = $request->get('id');
+
+        $themepion = $entityManagerInterface->getRepository(ThemePion::class)->find($id);
+
+        $user = $this->getUser();
+
+        $user->addCasier($themepion);
+
+        $user->setMonnaie($user->getMonnaie() - 500);
+
+        $entityManagerInterface->persist($user);
+        $entityManagerInterface->flush();
+
+        return $this->redirectToRoute('boutique');
+
+        return $this->render('base/boutique.html.twig', [
+        ]);
+    }
+    #[Route('/equiper/{id}', name: 'equiper-pion')]
+    public function equiperPion(Request $request , EntityManagerInterface $entityManagerInterface, SluggerInterface $slugger): Response
+    {    
+        $id = $request->get('id');
+
+        $themepion = $entityManagerInterface->getRepository(ThemePion::class)->find($id);
+
+        $user = $this->getUser();
+
+        $user->setThemePion($themepion);
+
+        $entityManagerInterface->persist($user);
+        $entityManagerInterface->flush();
+
+        return $this->redirectToRoute('profil', ['id' => $user->getId()]);
+
+        return $this->render('base/boutique.html.twig', [
         ]);
     }
 }
