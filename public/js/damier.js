@@ -1,7 +1,7 @@
 import { createDeplacement } from "./api/deplacement_api.js";
-import { getNbVictoireJoueur,patchNbVictoireJoueur,getNbDefaiteJoueur,patchNbDefaiteJoueur,getNbPartieJoueur,patchNbPartieJoueur } from "./api/joueur_api.js";
-import { getMouvement,createMouvement,patchArriveMouvement,getMouvementId } from "./api/mouvement_api.js";
-import { patchWinner,patchTimer,patchEtatPlateau,getNbCoupJN,getNbCoupJB,patchAddNbCoupJN,patchAddNbCoupJB,getNbTour,patchAddNbTour,getNbPionJB,getNbPionJN,patchDellNbPionJB,patchDellNbPionJN,getEtatPlateau,getJoueurN,getJoueurB } from "./api/partie_api.js";
+import { patchNbVictoireJoueur,patchNbDefaiteJoueur,patchNbPartieJoueur,patchMonnaieJoueur,patchPointsRangJoueur } from "./api/joueur_api.js";
+import { getMouvement,createMouvement,patchArriveMouvement } from "./api/mouvement_api.js";
+import { patchWinner,patchTimer,patchEtatPlateau,getNbTour,patchAddNbTour,getNbPionJB,getNbPionJN,patchDellNbPionJB,patchDellNbPionJN,getEtatPlateau,getJoueurN,getJoueurB } from "./api/partie_api.js";
 export {createDamier}
 
 var pionS=null;
@@ -39,9 +39,25 @@ async function estFini(){
         stopChronometer()
         patchTimer(partie.dataset.idpartie,time)
         if (await getNbPionJN(partie.dataset.idpartie)==0) {
-            patchWinner(partie.dataset.idpartie,getJoueurB(partie.dataset.idpartie))
+            await patchWinner(partie.dataset.idpartie,getJoueurB(partie.dataset.idpartie))
+            await patchNbDefaiteJoueur(await getJoueurN(partie.dataset.idpartie))
+            await patchNbPartieJoueur(await getJoueurN(partie.dataset.idpartie))
+            await patchMonnaieJoueur(await getJoueurN(partie.dataset.idpartie),25)
+            //-----------------------------------------------------------------------------
+            await patchNbVictoireJoueur(await getJoueurB(partie.dataset.idpartie))
+            await patchNbPartieJoueur(await getJoueurB(partie.dataset.idpartie))
+            await patchMonnaieJoueur(await getJoueurB(partie.dataset.idpartie),50)
+            await patchPointsRangJoueur(await getJoueurN(partie.dataset.idpartie),50)
         }else{
-            patchWinner(partie.dataset.idpartie,getJoueurN(partie.dataset.idpartie))
+            await patchWinner(partie.dataset.idpartie,getJoueurN(partie.dataset.idpartie))
+            await patchNbDefaiteJoueur(await getJoueurB(partie.dataset.idpartie))
+            await patchNbPartieJoueur(await getJoueurB(partie.dataset.idpartie))
+            await patchMonnaieJoueur(await getJoueurB(partie.dataset.idpartie),25)
+            //-----------------------------------------------------------------------------
+            await patchNbVictoireJoueur(await getJoueurN(partie.dataset.idpartie))
+            await patchNbPartieJoueur(await getJoueurN(partie.dataset.idpartie))
+            await patchMonnaieJoueur(await getJoueurN(partie.dataset.idpartie),50)
+            await patchPointsRangJoueur(await getJoueurN(partie.dataset.idpartie),50)
         }
     }
 }
