@@ -14,7 +14,7 @@ let startTime = null;
 var time=0
 init()
 canPlay()
-setInterval(fullReset, 10000);
+setInterval(fullReset, 5000);
 setInterval(setTimer, 1000);
 
 async function init() {
@@ -23,7 +23,9 @@ async function init() {
         initPion();
         recursiv();
         divNbTour.innerText=tour;
+        patchEtatPlateau(partie.dataset.idpartie,document.getElementById("damier").innerHTML)
     }else{
+        recursiv();
         tour = await getNbTour(partie.dataset.idpartie)
         document.getElementById('damier').innerHTML=await getEtatPlateau(partie.dataset.idpartie);
         divNbTour.innerText=tour;
@@ -143,11 +145,11 @@ async function fullReset() {
     }else{
         tour=await getNbTour(parseInt(partie.dataset.idpartie))
         divNbTour.innerHTML=tour
+        document.getElementById('damier').innerHTML=await getEtatPlateau(partie.dataset.idpartie);
         await canPlay()
-        resetMouvement()
-        document.getElementById('damier').innerHTML=await getEtatPlateau(partie.dataset.idpartie)
+        await resetMouvement()
         initPion()
-        estFini()
+        await estFini()
     }
 }
 
@@ -200,7 +202,10 @@ async function initPion() {
 }
 
 async function canPlay() {
-    if (partie.dataset.idjoueur==await getJoueurN(partie.dataset.idpartie) && tour%2==0) {
+    if (tour == 0) {
+        document.getElementById('damier').style.pointerEvents = 'none';
+    }
+    else if (partie.dataset.idjoueur==await getJoueurN(partie.dataset.idpartie) && tour%2==0) {
         document.getElementById('damier').style.pointerEvents = 'none';
     }else if (partie.dataset.idjoueur==await getJoueurB(partie.dataset.idpartie) && tour%2!=0) {
         document.getElementById('damier').style.pointerEvents = 'none';
@@ -227,7 +232,6 @@ function select() {
 async function moove() {
     if (pionS !== null) {
         let caseChoisis = this
-        //console.log(caseChoisis)
         if (caseChoisis.style.backgroundColor == "blue") {
             let departX=pionS.parentElement.dataset.x
             let departY=pionS.parentElement.dataset.y
@@ -242,9 +246,7 @@ async function moove() {
             createDeplacement(parseInt(idMouv),parseInt(partie.dataset.idpartie),parseInt(departX),parseInt(departY),parseInt(caseChoisis.dataset.x),parseInt(caseChoisis.dataset.y))
             patchArriveMouvement(parseInt(idMouv),parseInt(caseChoisis.dataset.x),parseInt(caseChoisis.dataset.y))
             patchEtatPlateau(parseInt(partie.dataset.idpartie),document.getElementById('damier').innerHTML)
-            console.log(tour)
             resetSelectPion();
-            console.log(document.getElementById('damier'))
             divNbTour.innerText=tour;
         }
     }
@@ -253,7 +255,6 @@ async function moove() {
 async function moove2() {
     if (pionS !== null) {
         let caseChoisis = caseMove
-        //console.log(caseChoisis)
         if (caseChoisis.style.backgroundColor == "blue") {
             let departX=pionS.parentElement.dataset.x
             let departY=pionS.parentElement.dataset.y
@@ -272,7 +273,6 @@ async function moove2() {
             createDeplacement(parseInt(idMouv),parseInt(partie.dataset.idpartie),parseInt(departX),parseInt(departY),parseInt(caseChoisis.dataset.x),parseInt(caseChoisis.dataset.y))
             patchArriveMouvement(parseInt(idMouv),parseInt(caseChoisis.dataset.x),parseInt(caseChoisis.dataset.y))
             patchEtatPlateau(parseInt(partie.dataset.idpartie),document.getElementById('damier').innerHTML)
-            console.log(tour)
             resetSelectPion();
             divNbTour.innerText=tour;
         }
@@ -311,8 +311,6 @@ function selectCase() {
 
             if (targetCase && !targetCase.firstChild) {
                 targetCase.style.backgroundColor = "blue";
-                console.log("coucou")
-                console.log(targetCase);
                 targetCase.addEventListener("click", moove);
             } else if (targetCase && targetCase.firstChild && (pionS.classList.contains("pion-blanc") && !targetCase.firstChild.classList.contains("pion-blanc")) ||
             (pionS.classList.contains("pion-noir") && !targetCase.firstChild.classList.contains("pion-noir")) ) {
@@ -325,8 +323,6 @@ function selectCase() {
                         
                         let caseClear = document.querySelector(`[data-x="${targetX}"][data-y="${targetY}"]`);
                         if (caseClear) {
-                            console.log("coucou2")
-                            console.log(caseClear);
                             let pion = caseClear.firstChild;
                             if (pion) {
                                 caseClear.removeChild(pion);
