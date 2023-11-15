@@ -71,14 +71,14 @@ class Joueur implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?int $pointsRang = null;
 
-    #[ORM\ManyToMany(targetEntity: ThemePion::class, mappedBy: 'joueur')]
-    private Collection $themePions;
+    #[ORM\ManyToMany(targetEntity: ThemePion::class, inversedBy: 'user')]
+    private Collection $casier;
 
     public function __construct()
     {
         $this->parties = new ArrayCollection();
         $this->mouvements = new ArrayCollection();
-        $this->themePions = new ArrayCollection();
+        $this->casier = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -298,26 +298,23 @@ class Joueur implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @return Collection<int, ThemePion>
      */
-    public function getThemePions(): Collection
+    public function getCasier(): Collection
     {
-        return $this->themePions;
+        return $this->casier;
     }
 
-    public function addThemePion(ThemePion $themePion): static
+    public function addCasier(ThemePion $casier): static
     {
-        if (!$this->themePions->contains($themePion)) {
-            $this->themePions->add($themePion);
-            $themePion->addJoueur($this);
+        if (!$this->casier->contains($casier)) {
+            $this->casier->add($casier);
         }
 
         return $this;
     }
 
-    public function removeThemePion(ThemePion $themePion): static
+    public function removeCasier(ThemePion $casier): static
     {
-        if ($this->themePions->removeElement($themePion)) {
-            $themePion->removeJoueur($this);
-        }
+        $this->casier->removeElement($casier);
 
         return $this;
     }

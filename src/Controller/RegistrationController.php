@@ -30,18 +30,20 @@ class RegistrationController extends AbstractController
                     $form->get('plainPassword')->getData()
                 )
             );
+            $theme = $entityManager->getRepository(ThemePion::class)->find(1);
             $user->setNbVictoire(0);
             $user->setNbDefaite(0);
             $user->setNbTotalePartie(0);
             $user->setRang($entityManager->getRepository(Rang::class)->find(1));
-            $user->setThemePion($entityManager->getRepository(ThemePion::class)->find(1));
-            $user->setMonnaie(0);
+            $user->setThemePion($theme);
+            $user->addCasier($theme);
+            $user->setMonnaie(500);
             $user->setPointsRang(0);
             $entityManager->persist($user);
             $entityManager->flush();
             // do anything else you need here, like send an email
 
-            return $this->redirectToRoute('app_login');
+            //return $this->redirectToRoute('app_login');
         }
 
         return $this->render('registration/register.html.twig', [
