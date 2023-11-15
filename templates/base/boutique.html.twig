@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+	{{ parent() }}
+	Boutique
+{% endblock %}
+
+{% block body %}
+
+	{# Container de la page boutique #}
+	<div class="container d-flex justify-content-center mt-5 mb-5">
+		<div class="p-5 mt-2 h-100" style="background-color:rgba(31, 41, 55); border-radius: 16px;">
+			<h4 class="text-white mb-3">Boutique de {{ app.user.username }}</h4>
+			<div class="d-flex">
+				{% for tpion in themePion %}
+					{% if tpion == app.user.themePion %}
+						<a href="#" class="col-md-1 d-flex flex-column text-center nav-link">
+							<div class="rounded-3 position-relative" style="height: 120px; width: 140px; background-color: {{ tpion.argb }};">
+								<div class="position-absolute bottom-0 end-0 px-1 bg-success text-white rounded-3">Débloquée</div>
+							</div>
+							<p>{{ tpion.couleur }}</p>
+						</a>
+					{% else %}
+						<a href="#" class="col-md-1 d-flex flex-column text-center nav-link">
+							<div class="rounded-3 position-relative" style="height: 120px; width: 140px; background-color: {{ tpion.argb }};">
+								<div class="position-absolute bottom-0 end-0 px-1 bg-success text-white rounded-3">Coût : 500</div>
+							</div>
+							<p>{{ tpion.couleur }}</p>
+						</a>
+					{% endif %}
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endblock %}
+
+
+{# {% for tpion in themePion %}
+{% if tpion == app.user.themePion %}
+	<a href="#">
+		<div class="border border-success border-3 rounded-3" style="height: 80px; width: 100px; background-color: {{ tpion.argb }};">
+
+		</div>
+	</a>
+{% else %}
+	<a href="#">
+		<div class="rounded-3" style="height: 80px; width: 100px; background-color: {{ tpion.argb }};">
+
+		</div>
+	</a>
+{% endif %}
+{% endfor %} #}

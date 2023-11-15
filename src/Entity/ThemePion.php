@@ -27,9 +27,13 @@ class ThemePion
     #[ORM\OneToMany(mappedBy: 'themePion', targetEntity: Joueur::class)]
     private Collection $joueurs;
 
+    #[ORM\ManyToMany(targetEntity: Joueur::class, inversedBy: 'themePions')]
+    private Collection $joueur;
+
     public function __construct()
     {
         $this->joueurs = new ArrayCollection();
+        $this->joueur = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -101,5 +105,13 @@ class ThemePion
         }
 
         return $this;
+    }
+
+    /**
+     * @return Collection<int, Joueur>
+     */
+    public function getJoueur(): Collection
+    {
+        return $this->joueur;
     }
 }

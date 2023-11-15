@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+	{{ parent() }}
+	Classement
+{% endblock %}
+
+{% block body %}
+
+	{# Container de la page contenant le classement des joueurs #}
+	<div class="container d-flex justify-content-center mt-5 mb-5">
+		<div class="col-md-8 p-5 mt-2 h-100" style="background-color:rgba(31, 41, 55); border-radius: 16px;">
+			<h4 class="text-white mb-3">Profil de {{ joueur.username }}</h4>
+			<div class="border border-white p-3" style="border-radius: 16px;">
+				<div class="d-flex justify-content-between">
+					<p class="text-white">{{ joueur.username }}</p>
+					<p><span style="color:{{ joueur.rang.couleur }};">{{ joueur.rang.libelle }}</span>
+							<img class="img-fluid mx-auto" src="images/rangs/{{ joueur.rang.miniLogo }}"/> ( {{ joueur.pointsRang }} )</p>
+				</div>
+				<p>Parties jouées : {{ joueur.nbTotalePartie }}</p>
+				<p>Parties gagnées : {{ joueur.nbVictoire }}</p>
+				<p>Parties perdues : {{ joueur.nbDefaite }}</p>
+			</div>
+			<h3 class="mt-5 text-white mb-3">Historique de partie</h3>
+			<div class="container-fluid d-flex text-center text-white px-3">
+				<div class="container-fluid d-flex">
+					<div class="col-md-3">Résultat</div>
+					<div class="col-md-3">Joueurs</div>
+					<div class="col-md-3">Date</div>
+					<div class="col-md-3">Nombre de coups N/B</div>
+				</div>
+			</div>
+			{% for partie in parties %}
+				{% if partie.joueurB != null and partie.joueurN != null %}
+					<div class="border border-white d-flex justify-content-between p-3 mb-3" style="border-radius: 16px;">
+						<div class="container-fluid d-flex text-center text-white align-items-center">
+							<div class="col-md-3">
+								{% if partie.winner == joueur %}
+									<p class="text-success">Victoire</p>
+								{% else %}
+									<p class="text-danger">Défaite</p>
+								{% endif %}
+							</div>
+							<div class="col-md-3">
+								<p class="text-white">
+									{% if partie.joueurN.username == joueur.username %}
+										<span class="fw-bold">{{ partie.joueurN.username }}</span>
+										vs
+										<a href="{{ path('profil', {'id': partie.joueurB.id}) }}">{{ partie.joueurB.username }}</a>
+									{% else %}
+										<a href="{{ path('profil', {'id': partie.joueurN.id}) }}">{{ partie.joueurN.username }}</a>
+										vs
+										<span class="fw-bold">{{ partie.joueurB.username }}</span>
+									{% endif %}
+								</p>
+							</div>
+							<div class="col-md-3">{{ partie.datePartie|date('d/m/Y') }}</div>
+							<div class="col-md-3">{{ partie.nbCoupJn }} / {{ partie.nbCoupJb }}</div>
+						</div>
+					</div>
+				{% endif %}
+			{% endfor %}
+		</div>
+	</div>
+</div>{% endblock %}

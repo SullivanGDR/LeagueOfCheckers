@@ -87,9 +87,9 @@
             {% endif %}
         </div>
         {% else %}
-        <div class="p-3" style="background-color: rgba(31, 41, 55); border-radius: 16px;">
+        <div class="p-3 mt-2" style="background-color: rgba(31, 41, 55); border-radius: 16px;">
             <div class="text-center">
-                <p class="m-0 mb-2 text-white text-capitalize">{{ partie.joueurB.username }}</p>
+                <a href="{{ path('profil', {'id': partie.joueurB.id}) }}" class="m-0 mb-2 text-white text-capitalize">{{ partie.joueurB.username }}</a>
             </div>
             <hr>
             <div class="d-flex">

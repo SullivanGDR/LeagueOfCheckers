@@ -1,0 +1,126 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ parent() }} Jouer
+{% endblock %}
+
+{% block body %}
+
+<div class="container d-flex mt-5 mb-5">
+	{# Colonne de gauche #}
+	<div class="col-md-8 me-1 h-100">
+		{# Toutes les parties en cours #}
+		<div class="p-3" style="background-color:rgba(31, 41, 55); border-radius: 16px;">
+			<h3 class="text-center text-white mb-3">Parties disponibles</h3>
+			<div class="container-fluid d-flex text-center text-white">
+				<div class="col-md-3">ID partie</div>
+				<div class="col-md-3">Hôte de la partie</div>
+				<div class="col-md-3">État de la partie</div>
+				<div class="col-md-3">Rejoindre</div>
+			</div>
+            <hr>
+            {% for partie in parties %}
+                {% if partie.joueurB == null %}
+					<div class="container-fluid d-flex text-center text-white align-items-center">
+						<div class="col-md-3">{{ partie.id }}</div>
+						<div class="col-md-3">{{ partie.joueurN.username }}</div>
+						<div class="col-md-3">En attente ..</div>
+						<div class="col-md-3">
+							{% if app.user %}
+								<form action="{{ path('partie', {'id': partie.id}) }}">
+									<button class="btnJoinParty" type="submit">Rejoindre</button>
+								</form>
+							{% else %}
+								<button type="button" style="outline: none;" class="btnJoinParty" data-bs-toggle="modal" data-bs-target="#creerPartieModal">Rejoindre</button>	 
+							{% endif %}
+						</div>
+					</div>
+					<hr>
+                {% endif %}
+            {% endfor %}
+		</div>
+	</div>
+	{# Colonne de droite #}
+	<div class="col-md-4 ms-1 flex-grow-1">
+		<div class="p-3" style="background-color:rgba(31, 41, 55); border-radius: 16px;">
+			<div class="text-center">
+				<h3 class="text-white"><i class="bi bi-people"></i> Party Mode</h3>
+			</div>
+			<div class="text-center">
+				<p>Jouez avec vos amis grâce au lien d'invitation</p>
+				{% if app.user %}
+					<form action="{{path('creation-partie')}}">
+						<button type="submit" style="outline: none;" class="btn btn-outline-info">Créer une partie</button>
+					</form>
+				{% else %}
+					<button type="button" style="outline: none;" class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#creerPartieModal">Créer une partie</button>
+				{% endif %}
+				<p>Ou</p>
+				<h4 class="text-white">Rejoindre une partie</h4>
+				{% if app.user %}
+					<div class="d-inline-block rounded-3 p-1 bg-white">
+						<input class="me-1 inputJoinParty" type="text" id="joinPartyForm" placeholder="Code de la partie">
+						<button class="btnJoinParty" type="submit" id="joinPartyButton">Rejoindre</button>
+					</div>
+				{% else %}
+					<div class="d-inline-block rounded-3 p-1 bg-white">
+						<input class="me-1 inputJoinParty" type="text" placeholder="Code de la partie">
+						<button type="button" style="outline: none;" class="btnJoinParty" data-bs-toggle="modal" data-bs-target="#creerPartieModal">Rejoindre</button>
+					</div>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+
+		<!-- Modal -->
+	<div class="modal fade" id="creerPartieModal" tabindex="-1" aria-labelledby="creerPartieModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title fs-5" id="creerPartieModalLabel">Information</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					Vous devez vous connecter pour créer ou rejoindre une partie.
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+					<a href="{{ path('app_login') }}" class="align-self-center">
+						<button class="btn text-white" style="background-color: #6d28d9;">Connexion</button>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script>
+	document.addEventListener('DOMContentLoaded', function () {
+    const joinPartyButton = document.getElementById('joinPartyButton');
+    const joinPartyInput = document.getElementById('joinPartyForm');
+
+    joinPartyButton.addEventListener('click', function () {
+        const codePartie = joinPartyInput.value;
+        // Effectuez une vérification asynchrone pour savoir si la partie existe.
+        checkIfPartieExists(codePartie);
+    });
+
+    function checkIfPartieExists(codePartie) {
+    // Vous devez implémenter une requête asynchrone pour vérifier si la partie existe.
+    fetch(`https://s3-4674.nuage-peda.fr/damier/public/partie/${codePartie}`)
+        .then(response => {
+            if (response.status === 200) {
+                // La partie existe, redirigez l'utilisateur vers la page de la partie.
+                window.location.href = `https://s3-4674.nuage-peda.fr/damier/public/partie/${codePartie}`;
+            } else {
+                // La partie n'existe pas, faites quelque chose en conséquence (par exemple, affichez un message d'erreur).
+                console.log('La partie n\'existe pas.');
+            }
+        })
+        .catch(error => {
+            console.error('Erreur lors de la vérification de la partie : ', error);
+        });
+}
+});
+</script>
+
+{% endblock %}

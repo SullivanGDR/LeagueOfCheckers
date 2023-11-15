@@ -32,7 +32,7 @@
 						<img class="img-fluid" src="{{ asset(imgBrand) }}" />
 					</a>
 					<div class="position-absolute top-50 start-50 translate-middle">
-						<a href="{{ path('app_login') }}">
+						<a href="{{ path('jouer') }}">
 							<button class="btn rounded-pill" style="color:#d1d5db; background-color: #6d28d9;">Jouer</button>
 						</a>
 					</div>
@@ -43,7 +43,7 @@
 							</a>
 							<ul class="dropdown-menu" style="background-color:#1f2937 !important; color:#9ca3af !important;">
 								<li>
-									<a class="dropdown-item bg-transparent" href="#">Profil</a>
+									<a class="dropdown-item bg-transparent" href="{{ path('profil', {'id': app.user.id}) }}">Profil</a>
 								</li>
 								<li><hr class="dropdown-divider"></li>
 								<li>
@@ -66,7 +66,7 @@
 							<a class="nav-link active d-block d-lg-none container-rang" aria-current="page" href="#">Accueil</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link active d-block d-lg-none" aria-current="page" href="#">Jouer</a>
+							<a class="nav-link active d-block d-lg-none" aria-current="page" href="{{ path('jouer') }}">Jouer</a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link active d-block d-lg-none" aria-current="page" href="{{path('rangs')}}">Rangs</a>

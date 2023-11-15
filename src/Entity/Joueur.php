@@ -71,10 +71,14 @@ class Joueur implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?int $pointsRang = null;
 
+    #[ORM\ManyToMany(targetEntity: ThemePion::class, mappedBy: 'joueur')]
+    private Collection $themePions;
+
     public function __construct()
     {
         $this->parties = new ArrayCollection();
         $this->mouvements = new ArrayCollection();
+        $this->themePions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -287,6 +291,33 @@ class Joueur implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPointsRang(int $pointsRang): static
     {
         $this->pointsRang = $pointsRang;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ThemePion>
+     */
+    public function getThemePions(): Collection
+    {
+        return $this->themePions;
+    }
+
+    public function addThemePion(ThemePion $themePion): static
+    {
+        if (!$this->themePions->contains($themePion)) {
+            $this->themePions->add($themePion);
+            $themePion->addJoueur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeThemePion(ThemePion $themePion): static
+    {
+        if ($this->themePions->removeElement($themePion)) {
+            $themePion->removeJoueur($this);
+        }
 
         return $this;
     }
