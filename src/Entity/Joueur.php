@@ -11,10 +11,12 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\Patch;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ApiResource(operations:[
-    new Get(normalizationContext:['groups'=>'joueur:item'])
+    new Get(normalizationContext:['groups'=>'joueur:item']),
+    new Patch(normalizationContext:['groups'=>'patchJ:item']),
 ])]
 #[ORM\Entity(repositoryClass: JoueurRepository::class)]
 #[UniqueEntity(fields: ['username'], message: 'There is already an account with this username')]
@@ -40,15 +42,15 @@ class Joueur implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $password = null;
 
     #[ORM\Column]
-    #[Groups(['joueur:item'])]
+    #[Groups(['joueur:item','patchJ:item'])]
     private ?int $nbVictoire = null;
 
     #[ORM\Column]
-    #[Groups(['joueur:item'])]
+    #[Groups(['joueur:item','patchJ:item'])]
     private ?int $nbDefaite = null;
 
     #[ORM\Column]
-    #[Groups(['joueur:item'])]
+    #[Groups(['joueur:item','patchJ:item'])]
     private ?int $nbTotalePartie = null;
 
     #[ORM\ManyToOne(inversedBy: 'joueurs')]

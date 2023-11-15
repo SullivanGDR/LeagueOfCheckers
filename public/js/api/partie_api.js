@@ -100,7 +100,7 @@ async function patchAddNbCoupJN(idPartie) {
         const currentNbCoupJN = await getNbCoupJN(idPartie);
 
         const data = {
-            nbCoupJN: currentNbCoupJN + 1,
+            "nbCoupJN": currentNbCoupJN + 1,
         };
 
         // Création des options de la requête
@@ -132,7 +132,7 @@ async function patchAddNbCoupJB(idPartie) {
         const currentNbCoupJB = await getNbCoupJB(idPartie);
 
         const data = {
-            nbCoupJB: currentNbCoupJB + 1,
+            "nbCoupJB": currentNbCoupJB + 1,
         };
 
         // Création des options de la requête

@@ -1,4 +1,5 @@
 import { createDeplacement } from "./api/deplacement_api.js";
+import { getNbVictoireJoueur,patchNbVictoireJoueur,getNbDefaiteJoueur,patchNbDefaiteJoueur,getNbPartieJoueur,patchNbPartieJoueur } from "./api/joueur_api.js";
 import { getMouvement,createMouvement,patchArriveMouvement,getMouvementId } from "./api/mouvement_api.js";
 import { patchWinner,patchTimer,patchEtatPlateau,getNbCoupJN,getNbCoupJB,patchAddNbCoupJN,patchAddNbCoupJB,getNbTour,patchAddNbTour,getNbPionJB,getNbPionJN,patchDellNbPionJB,patchDellNbPionJN,getEtatPlateau,getJoueurN,getJoueurB } from "./api/partie_api.js";
 export {createDamier}
@@ -13,7 +14,6 @@ let startTime = null;
 var time=0
 init()
 canPlay()
-console.log(tour)
 setInterval(fullReset, 10000);
 setInterval(setTimer, 1000);
 
