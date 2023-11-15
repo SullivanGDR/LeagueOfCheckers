@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 {% block title %}
 	{{ parent() }}
-	Classement
+	Profil de {{ joueur.username }}
 {% endblock %}
 
 {% block body %}
@@ -20,6 +20,40 @@
 				<p>Parties gagnées : {{ joueur.nbVictoire }}</p>
 				<p>Parties perdues : {{ joueur.nbDefaite }}</p>
 			</div>
+			{% if app.user == joueur %}
+				<h3 class="text-white mb-3 mt-3">Votre casier</h3>
+				<div class="container-fluid d-flex">
+					<div class="row">
+				{% for tpion in themePion %}
+					{% if tpion in app.user.getCasier() %}
+						{% if tpion == app.user.themePion %}
+							<div class="px-1 px-lg-2 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3">
+								<div class="nav-link d-flex justify-content-center">
+									<div class="card border-0 bg-transparent">
+										<div class="card-couleur-profil border border-success border-3" style="background-color: {{ tpion.argb }};"><div class="theme-choisi bg-success px-1"><i class="bi bi-check2-circle text-white"></i></div></div>
+										<div class="card-body d-flex justify-content-between p-0 align-items-center">
+											<p class="card-text m-0">{{ tpion.couleur }}</p>
+										</div>
+									</div>
+								</div>
+							</div>
+						{% else %}
+							<div class="px-1 px-lg-2 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3">
+								<div class="nav-link d-flex justify-content-center">
+									<div class="card border-0 bg-transparent">
+										<div class="card-couleur-profil" style="background-color: {{ tpion.argb }};"><a href="{{path('equiper-pion', {"id": tpion.id})}}" class="bouton-equiper nav-link p-2 bg-success rounded-2">Équiper</a></div>
+										<div class="card-body d-flex justify-content-between p-0 align-items-center">
+											<p class="card-text m-0">{{ tpion.couleur }}</p>
+										</div>
+									</div>
+								</div>
+							</div>
+						{% endif %}
+					{% endif %}
+				{% endfor %}
+					</div>
+				</div>
+			{% endif %}
 			<h3 class="mt-5 text-white mb-3">Historique de partie</h3>
 			<div class="container-fluid d-flex text-center text-white px-3">
 				<div class="container-fluid d-flex">
@@ -61,4 +95,5 @@
 			{% endfor %}
 		</div>
 	</div>
-</div>{% endblock %}
+</div>
+{% endblock %}
