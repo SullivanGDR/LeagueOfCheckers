@@ -1,6 +1,6 @@
 import { createDeplacement } from "./api/deplacement_api.js";
 import { getMouvement,createMouvement,patchArriveMouvement,getMouvementId } from "./api/mouvement_api.js";
-import { patchEtatPlateau,getNbCoupJN,getNbCoupJB,patchAddNbCoupJN,patchAddNbCoupJB,getNbTour,patchAddNbTour,getNbPionJB,getNbPionJN,patchDellNbPionJB,patchDellNbPionJN,getEtatPlateau,getJoueurN,getJoueurB } from "./api/partie_api.js";
+import { patchWinner,patchTimer,patchEtatPlateau,getNbCoupJN,getNbCoupJB,patchAddNbCoupJN,patchAddNbCoupJB,getNbTour,patchAddNbTour,getNbPionJB,getNbPionJN,patchDellNbPionJB,patchDellNbPionJN,getEtatPlateau,getJoueurN,getJoueurB } from "./api/partie_api.js";
 export {createDamier}
 
 var pionS=null;
@@ -8,11 +8,14 @@ var caseMove=null;
 var partie=document.getElementById('idPartie');
 var tour= await getNbTour(partie.dataset.idpartie)
 var divNbTour=document.getElementById("nbTour")
+let isRunning = false;
+let startTime = null;
+var time=0
 init()
 canPlay()
 console.log(tour)
 setInterval(fullReset, 10000);
-console.log(await getEtatPlateau(partie.dataset.idpartie))
+setInterval(setTimer, 1000);
 
 async function init() {
     if (await getEtatPlateau(partie.dataset.idpartie) == null) {
@@ -28,6 +31,19 @@ async function init() {
         resetMouvement();
     }
 
+}
+
+async function estFini(){
+    if (await getNbPionJN(partie.dataset.idpartie)==0 || await getNbPionJB(partie.dataset.idpartie)==0) {
+        document.getElementById('damier').style.pointerEvents = 'none';
+        stopChronometer()
+        patchTimer(partie.dataset.idpartie,time)
+        if (await getNbPionJN(partie.dataset.idpartie)==0) {
+            patchWinner(partie.dataset.idpartie,getJoueurB(partie.dataset.idpartie))
+        }else{
+            patchWinner(partie.dataset.idpartie,getJoueurN(partie.dataset.idpartie))
+        }
+    }
 }
 
 async function recursiv(){
@@ -115,6 +131,7 @@ async function fullReset() {
         resetMouvement()
         document.getElementById('damier').innerHTML=await getEtatPlateau(partie.dataset.idpartie)
         initPion()
+        estFini()
     }
 }
 
@@ -222,6 +239,11 @@ async function moove2() {
         let caseChoisis = caseMove
         //console.log(caseChoisis)
         if (caseChoisis.style.backgroundColor == "blue") {
+            if (tour%2==0) {
+                await patchDellNbPionJN(partie.dataset.idpartie)
+            }else{
+                await patchDellNbPionJB(partie.dataset.idpartie)
+            }
             pionS.parentElement.removeChild(pionS);
             caseChoisis.appendChild(pionS);
             resetCase();
@@ -298,7 +320,6 @@ function selectCase() {
                 }
             }
         }
-        console.log("=========");
         if (pionS.classList.contains("pion-noir")) {
             if (x === 0) {
                 // Handle corner cases
@@ -320,6 +341,50 @@ function selectCase() {
                 processCase(-1, -1);
             }
         }
-        console.log("=========");
     }
 }
+
+// Fonction pour formater un nombre en ajoutant un zéro initial si nécessaire
+function formatNumberWithLeadingZero(number) {
+    return number.toString().padStart(2, '0');
+  }
+  
+  // Fonction pour mettre à jour l'affichage du chronomètre
+  function updateChronometer() {
+    if (isRunning) {
+      const currentTime = new Date();
+      const elapsedTime = new Date(currentTime - startTime);
+      const minutes = formatNumberWithLeadingZero(elapsedTime.getUTCMinutes());
+      const seconds = formatNumberWithLeadingZero(elapsedTime.getUTCSeconds());
+      let timer=document.getElementById("timer")
+      time=`${minutes}:${seconds}`;
+      timer.innerText=`Temps écoulé : ${minutes}:${seconds}`;
+    }
+  }
+  
+  // Démarrer le chronomètre
+  function startChronometer() {
+    if (!isRunning) {
+      startTime = new Date();
+      isRunning = true;
+    }
+  }
+  
+  // Arrêter le chronomètre
+  function stopChronometer() {
+    if (isRunning) {
+      isRunning = false;
+    }
+  }
+
+  async function setTimer() {
+      if (await getJoueurB(partie.dataset.idpartie)!=null) {
+        startChronometer()
+        updateChronometer()
+      }else{
+        let timer=document.getElementById("timer")
+        timer.innerText=`En attente du lancement de la partie ..`;
+      }
+
+
+  }

@@ -313,7 +313,71 @@ async function getJoueurB(id) {
     }
 }
 
-export {patchEtatPlateau,getNbCoupJN,getNbCoupJB,patchAddNbCoupJN,patchAddNbCoupJB,getNbTour,patchAddNbTour,getNbPionJB,getNbPionJN,patchDellNbPionJB,patchDellNbPionJN,getEtatPlateau,getJoueurN,getJoueurB}
+async function patchTimer(idPartie,timer) {
+    try {
+        const currentNbPionJN = await getNbPionJN(idPartie);
+
+        const data = {
+            "timer": `00:${timer}`
+        };
+
+        // Création des options de la requête
+        const options = {
+            method: 'PATCH', // Méthode HTTP
+            body: JSON.stringify(data),
+            headers: {
+                'Content-Type': 'application/merge-patch+json',
+                'Accept': 'application/ld+json',
+            },
+        };
+
+        const response = await fetch(`${API_URL}/${idPartie}`, options);
+        if (!response.ok) {
+            throw new Error('Erreur :' + response.statusText);
+        }
+
+        const r = await response.json();
+        console.log(r);
+        return r;
+    } catch (erreur) {
+        console.error('Erreur lors de la modification : ', erreur);
+        throw erreur;
+    }
+}
+
+async function patchWinner(idPartie,idJoueur) {
+    try {
+        const currentNbPionJN = await getNbPionJN(idPartie);
+
+        const data = {
+            "winner": `/Damier/public/api/parties/${idJoueur}`
+        };
+
+        // Création des options de la requête
+        const options = {
+            method: 'PATCH', // Méthode HTTP
+            body: JSON.stringify(data),
+            headers: {
+                'Content-Type': 'application/merge-patch+json',
+                'Accept': 'application/ld+json',
+            },
+        };
+
+        const response = await fetch(`${API_URL}/${idPartie}`, options);
+        if (!response.ok) {
+            throw new Error('Erreur :' + response.statusText);
+        }
+
+        const r = await response.json();
+        console.log(r);
+        return r;
+    } catch (erreur) {
+        console.error('Erreur lors de la modification : ', erreur);
+        throw erreur;
+    }
+}
+
+export {patchWinner,patchEtatPlateau,getNbCoupJN,getNbCoupJB,patchAddNbCoupJN,patchAddNbCoupJB,getNbTour,patchAddNbTour,getNbPionJB,getNbPionJN,patchDellNbPionJB,patchDellNbPionJN,getEtatPlateau,getJoueurN,getJoueurB,patchTimer}
 
 
 
