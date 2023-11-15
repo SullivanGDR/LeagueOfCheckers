@@ -154,11 +154,11 @@
 
     function checkIfPartieExists(codePartie) {
     // Vous devez implémenter une requête asynchrone pour vérifier si la partie existe.
-    fetch(`https://s3-4674.nuage-peda.fr/damier/public/partie/${codePartie}`)
+    fetch(`https://s3-4672.nuage-peda.fr/Damier/public/api/parties/${codePartie}`)
         .then(response => {
             if (response.status === 200) {
                 // La partie existe, redirigez l'utilisateur vers la page de la partie.
-                window.location.href = `https://s3-4674.nuage-peda.fr/damier/public/partie/${codePartie}`;
+                window.location.href = `https://s3-4672.nuage-peda.fr/Damier/public/partie/${codePartie}`;
             } else {
                 // La partie n'existe pas, faites quelque chose en conséquence (par exemple, affichez un message d'erreur).
                 console.log('La partie n\'existe pas.');

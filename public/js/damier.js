@@ -239,6 +239,8 @@ async function moove2() {
         let caseChoisis = caseMove
         //console.log(caseChoisis)
         if (caseChoisis.style.backgroundColor == "blue") {
+            let departX=pionS.parentElement.dataset.x
+            let departY=pionS.parentElement.dataset.y
             if (tour%2==0) {
                 await patchDellNbPionJN(partie.dataset.idpartie)
             }else{
@@ -250,8 +252,6 @@ async function moove2() {
             await patchAddNbTour(parseInt(partie.dataset.idpartie))
             tour=await getNbTour(parseInt(partie.dataset.idpartie))
             canPlay();
-            let departX=pionS.parentElement.dataset.x
-            let departY=pionS.parentElement.dataset.y
             let idMouv=await createMouvement(parseInt(departX),parseInt(departY),parseInt(partie.dataset.idjoueur),"saut")
             createDeplacement(parseInt(idMouv),parseInt(partie.dataset.idpartie),parseInt(departX),parseInt(departY),parseInt(caseChoisis.dataset.x),parseInt(caseChoisis.dataset.y))
             patchArriveMouvement(parseInt(idMouv),parseInt(caseChoisis.dataset.x),parseInt(caseChoisis.dataset.y))
